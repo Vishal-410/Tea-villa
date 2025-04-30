@@ -1,0 +1,53 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
+  firstName    String
+  lastName     String
+  phone        String      @unique // Changed to String to store phone numbers as text
+  password     String
+  otp          String?
+  otpExpiresAt DateTime?
+  token        UserToken[]
+}
+
+model UserToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ContactUs {
+  id      Int    @id @default(autoincrement())
+  name    String
+  phone   String
+  email   String
+  message String
+}
+
+model Products {
+  id           Int     @id @default(autoincrement())
+  image String
+  name         String
+  description1 String
+  description2 String
+  price        Float
+  origin       String
+  isOrganic    Boolean
+  isVirgin     Boolean
+  variant    String[]
+  quantiy  Int @default(0)
+}

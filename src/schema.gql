@@ -1,0 +1,58 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  password: String!
+}
+
+type JwtAuthResponse {
+  access_token: String!
+  requires2FA: Boolean!
+}
+
+type Contactus {
+  id: Int!
+  name: String!
+  phone: String!
+  email: String!
+  message: String!
+}
+
+type Query {
+  logoutUser: Boolean!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  forgetUserPassword(email: String!): User!
+  login(loginInput: LoginInput!): JwtAuthResponse!
+  verifyOtp(email: String!, otp: String!): JwtAuthResponse!
+  loginWithGoogle(idToken: String!): JwtAuthResponse!
+  createContactus(createContactusInput: CreateContactusInput!): Contactus!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CreateContactusInput {
+  name: String!
+  phone: String!
+  email: String!
+  message: String!
+}
