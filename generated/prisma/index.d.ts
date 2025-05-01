@@ -28,6 +28,16 @@ export type UserToken = $Result.DefaultSelection<Prisma.$UserTokenPayload>
  * 
  */
 export type ContactUs = $Result.DefaultSelection<Prisma.$ContactUsPayload>
+/**
+ * Model HomePageContent
+ * 
+ */
+export type HomePageContent = $Result.DefaultSelection<Prisma.$HomePageContentPayload>
+/**
+ * Model Paragraph
+ * 
+ */
+export type Paragraph = $Result.DefaultSelection<Prisma.$ParagraphPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +193,26 @@ export class PrismaClient<
     * ```
     */
   get contactUs(): Prisma.ContactUsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.homePageContent`: Exposes CRUD operations for the **HomePageContent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HomePageContents
+    * const homePageContents = await prisma.homePageContent.findMany()
+    * ```
+    */
+  get homePageContent(): Prisma.HomePageContentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.paragraph`: Exposes CRUD operations for the **Paragraph** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Paragraphs
+    * const paragraphs = await prisma.paragraph.findMany()
+    * ```
+    */
+  get paragraph(): Prisma.ParagraphDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -625,7 +655,9 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     UserToken: 'UserToken',
-    ContactUs: 'ContactUs'
+    ContactUs: 'ContactUs',
+    HomePageContent: 'HomePageContent',
+    Paragraph: 'Paragraph'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +676,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userToken" | "contactUs"
+      modelProps: "user" | "userToken" | "contactUs" | "homePageContent" | "paragraph"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -870,6 +902,154 @@ export namespace Prisma {
           }
         }
       }
+      HomePageContent: {
+        payload: Prisma.$HomePageContentPayload<ExtArgs>
+        fields: Prisma.HomePageContentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HomePageContentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HomePageContentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          findFirst: {
+            args: Prisma.HomePageContentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HomePageContentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          findMany: {
+            args: Prisma.HomePageContentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>[]
+          }
+          create: {
+            args: Prisma.HomePageContentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          createMany: {
+            args: Prisma.HomePageContentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HomePageContentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>[]
+          }
+          delete: {
+            args: Prisma.HomePageContentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          update: {
+            args: Prisma.HomePageContentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          deleteMany: {
+            args: Prisma.HomePageContentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HomePageContentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HomePageContentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>[]
+          }
+          upsert: {
+            args: Prisma.HomePageContentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomePageContentPayload>
+          }
+          aggregate: {
+            args: Prisma.HomePageContentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHomePageContent>
+          }
+          groupBy: {
+            args: Prisma.HomePageContentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HomePageContentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HomePageContentCountArgs<ExtArgs>
+            result: $Utils.Optional<HomePageContentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Paragraph: {
+        payload: Prisma.$ParagraphPayload<ExtArgs>
+        fields: Prisma.ParagraphFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ParagraphFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ParagraphFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          findFirst: {
+            args: Prisma.ParagraphFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ParagraphFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          findMany: {
+            args: Prisma.ParagraphFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
+          }
+          create: {
+            args: Prisma.ParagraphCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          createMany: {
+            args: Prisma.ParagraphCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ParagraphCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
+          }
+          delete: {
+            args: Prisma.ParagraphDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          update: {
+            args: Prisma.ParagraphUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          deleteMany: {
+            args: Prisma.ParagraphDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ParagraphUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ParagraphUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>[]
+          }
+          upsert: {
+            args: Prisma.ParagraphUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParagraphPayload>
+          }
+          aggregate: {
+            args: Prisma.ParagraphAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateParagraph>
+          }
+          groupBy: {
+            args: Prisma.ParagraphGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ParagraphGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ParagraphCountArgs<ExtArgs>
+            result: $Utils.Optional<ParagraphCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -957,6 +1137,8 @@ export namespace Prisma {
     user?: UserOmit
     userToken?: UserTokenOmit
     contactUs?: ContactUsOmit
+    homePageContent?: HomePageContentOmit
+    paragraph?: ParagraphOmit
   }
 
   /* Types for Logging */
@@ -1074,6 +1256,37 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTokenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserTokenWhereInput
+  }
+
+
+  /**
+   * Count Type HomePageContentCountOutputType
+   */
+
+  export type HomePageContentCountOutputType = {
+    paragraphs: number
+  }
+
+  export type HomePageContentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paragraphs?: boolean | HomePageContentCountOutputTypeCountParagraphsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HomePageContentCountOutputType without action
+   */
+  export type HomePageContentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContentCountOutputType
+     */
+    select?: HomePageContentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HomePageContentCountOutputType without action
+   */
+  export type HomePageContentCountOutputTypeCountParagraphsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParagraphWhereInput
   }
 
 
@@ -4350,6 +4563,2180 @@ export namespace Prisma {
 
 
   /**
+   * Model HomePageContent
+   */
+
+  export type AggregateHomePageContent = {
+    _count: HomePageContentCountAggregateOutputType | null
+    _avg: HomePageContentAvgAggregateOutputType | null
+    _sum: HomePageContentSumAggregateOutputType | null
+    _min: HomePageContentMinAggregateOutputType | null
+    _max: HomePageContentMaxAggregateOutputType | null
+  }
+
+  export type HomePageContentAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HomePageContentSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HomePageContentMinAggregateOutputType = {
+    id: number | null
+    image: string | null
+    heading: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HomePageContentMaxAggregateOutputType = {
+    id: number | null
+    image: string | null
+    heading: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HomePageContentCountAggregateOutputType = {
+    id: number
+    image: number
+    heading: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HomePageContentAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type HomePageContentSumAggregateInputType = {
+    id?: true
+  }
+
+  export type HomePageContentMinAggregateInputType = {
+    id?: true
+    image?: true
+    heading?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HomePageContentMaxAggregateInputType = {
+    id?: true
+    image?: true
+    heading?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HomePageContentCountAggregateInputType = {
+    id?: true
+    image?: true
+    heading?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HomePageContentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HomePageContent to aggregate.
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomePageContents to fetch.
+     */
+    orderBy?: HomePageContentOrderByWithRelationInput | HomePageContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HomePageContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomePageContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomePageContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HomePageContents
+    **/
+    _count?: true | HomePageContentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HomePageContentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HomePageContentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HomePageContentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HomePageContentMaxAggregateInputType
+  }
+
+  export type GetHomePageContentAggregateType<T extends HomePageContentAggregateArgs> = {
+        [P in keyof T & keyof AggregateHomePageContent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHomePageContent[P]>
+      : GetScalarType<T[P], AggregateHomePageContent[P]>
+  }
+
+
+
+
+  export type HomePageContentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HomePageContentWhereInput
+    orderBy?: HomePageContentOrderByWithAggregationInput | HomePageContentOrderByWithAggregationInput[]
+    by: HomePageContentScalarFieldEnum[] | HomePageContentScalarFieldEnum
+    having?: HomePageContentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HomePageContentCountAggregateInputType | true
+    _avg?: HomePageContentAvgAggregateInputType
+    _sum?: HomePageContentSumAggregateInputType
+    _min?: HomePageContentMinAggregateInputType
+    _max?: HomePageContentMaxAggregateInputType
+  }
+
+  export type HomePageContentGroupByOutputType = {
+    id: number
+    image: string
+    heading: string
+    createdAt: Date
+    updatedAt: Date
+    _count: HomePageContentCountAggregateOutputType | null
+    _avg: HomePageContentAvgAggregateOutputType | null
+    _sum: HomePageContentSumAggregateOutputType | null
+    _min: HomePageContentMinAggregateOutputType | null
+    _max: HomePageContentMaxAggregateOutputType | null
+  }
+
+  type GetHomePageContentGroupByPayload<T extends HomePageContentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HomePageContentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HomePageContentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HomePageContentGroupByOutputType[P]>
+            : GetScalarType<T[P], HomePageContentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HomePageContentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    image?: boolean
+    heading?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paragraphs?: boolean | HomePageContent$paragraphsArgs<ExtArgs>
+    _count?: boolean | HomePageContentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["homePageContent"]>
+
+  export type HomePageContentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    image?: boolean
+    heading?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["homePageContent"]>
+
+  export type HomePageContentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    image?: boolean
+    heading?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["homePageContent"]>
+
+  export type HomePageContentSelectScalar = {
+    id?: boolean
+    image?: boolean
+    heading?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HomePageContentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "image" | "heading" | "createdAt" | "updatedAt", ExtArgs["result"]["homePageContent"]>
+  export type HomePageContentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paragraphs?: boolean | HomePageContent$paragraphsArgs<ExtArgs>
+    _count?: boolean | HomePageContentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type HomePageContentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type HomePageContentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $HomePageContentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HomePageContent"
+    objects: {
+      paragraphs: Prisma.$ParagraphPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      image: string
+      heading: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["homePageContent"]>
+    composites: {}
+  }
+
+  type HomePageContentGetPayload<S extends boolean | null | undefined | HomePageContentDefaultArgs> = $Result.GetResult<Prisma.$HomePageContentPayload, S>
+
+  type HomePageContentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HomePageContentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HomePageContentCountAggregateInputType | true
+    }
+
+  export interface HomePageContentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HomePageContent'], meta: { name: 'HomePageContent' } }
+    /**
+     * Find zero or one HomePageContent that matches the filter.
+     * @param {HomePageContentFindUniqueArgs} args - Arguments to find a HomePageContent
+     * @example
+     * // Get one HomePageContent
+     * const homePageContent = await prisma.homePageContent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HomePageContentFindUniqueArgs>(args: SelectSubset<T, HomePageContentFindUniqueArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HomePageContent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HomePageContentFindUniqueOrThrowArgs} args - Arguments to find a HomePageContent
+     * @example
+     * // Get one HomePageContent
+     * const homePageContent = await prisma.homePageContent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HomePageContentFindUniqueOrThrowArgs>(args: SelectSubset<T, HomePageContentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HomePageContent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentFindFirstArgs} args - Arguments to find a HomePageContent
+     * @example
+     * // Get one HomePageContent
+     * const homePageContent = await prisma.homePageContent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HomePageContentFindFirstArgs>(args?: SelectSubset<T, HomePageContentFindFirstArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HomePageContent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentFindFirstOrThrowArgs} args - Arguments to find a HomePageContent
+     * @example
+     * // Get one HomePageContent
+     * const homePageContent = await prisma.homePageContent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HomePageContentFindFirstOrThrowArgs>(args?: SelectSubset<T, HomePageContentFindFirstOrThrowArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HomePageContents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HomePageContents
+     * const homePageContents = await prisma.homePageContent.findMany()
+     * 
+     * // Get first 10 HomePageContents
+     * const homePageContents = await prisma.homePageContent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const homePageContentWithIdOnly = await prisma.homePageContent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HomePageContentFindManyArgs>(args?: SelectSubset<T, HomePageContentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HomePageContent.
+     * @param {HomePageContentCreateArgs} args - Arguments to create a HomePageContent.
+     * @example
+     * // Create one HomePageContent
+     * const HomePageContent = await prisma.homePageContent.create({
+     *   data: {
+     *     // ... data to create a HomePageContent
+     *   }
+     * })
+     * 
+     */
+    create<T extends HomePageContentCreateArgs>(args: SelectSubset<T, HomePageContentCreateArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HomePageContents.
+     * @param {HomePageContentCreateManyArgs} args - Arguments to create many HomePageContents.
+     * @example
+     * // Create many HomePageContents
+     * const homePageContent = await prisma.homePageContent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HomePageContentCreateManyArgs>(args?: SelectSubset<T, HomePageContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HomePageContents and returns the data saved in the database.
+     * @param {HomePageContentCreateManyAndReturnArgs} args - Arguments to create many HomePageContents.
+     * @example
+     * // Create many HomePageContents
+     * const homePageContent = await prisma.homePageContent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HomePageContents and only return the `id`
+     * const homePageContentWithIdOnly = await prisma.homePageContent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HomePageContentCreateManyAndReturnArgs>(args?: SelectSubset<T, HomePageContentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HomePageContent.
+     * @param {HomePageContentDeleteArgs} args - Arguments to delete one HomePageContent.
+     * @example
+     * // Delete one HomePageContent
+     * const HomePageContent = await prisma.homePageContent.delete({
+     *   where: {
+     *     // ... filter to delete one HomePageContent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HomePageContentDeleteArgs>(args: SelectSubset<T, HomePageContentDeleteArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HomePageContent.
+     * @param {HomePageContentUpdateArgs} args - Arguments to update one HomePageContent.
+     * @example
+     * // Update one HomePageContent
+     * const homePageContent = await prisma.homePageContent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HomePageContentUpdateArgs>(args: SelectSubset<T, HomePageContentUpdateArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HomePageContents.
+     * @param {HomePageContentDeleteManyArgs} args - Arguments to filter HomePageContents to delete.
+     * @example
+     * // Delete a few HomePageContents
+     * const { count } = await prisma.homePageContent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HomePageContentDeleteManyArgs>(args?: SelectSubset<T, HomePageContentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HomePageContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HomePageContents
+     * const homePageContent = await prisma.homePageContent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HomePageContentUpdateManyArgs>(args: SelectSubset<T, HomePageContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HomePageContents and returns the data updated in the database.
+     * @param {HomePageContentUpdateManyAndReturnArgs} args - Arguments to update many HomePageContents.
+     * @example
+     * // Update many HomePageContents
+     * const homePageContent = await prisma.homePageContent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HomePageContents and only return the `id`
+     * const homePageContentWithIdOnly = await prisma.homePageContent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HomePageContentUpdateManyAndReturnArgs>(args: SelectSubset<T, HomePageContentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HomePageContent.
+     * @param {HomePageContentUpsertArgs} args - Arguments to update or create a HomePageContent.
+     * @example
+     * // Update or create a HomePageContent
+     * const homePageContent = await prisma.homePageContent.upsert({
+     *   create: {
+     *     // ... data to create a HomePageContent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HomePageContent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HomePageContentUpsertArgs>(args: SelectSubset<T, HomePageContentUpsertArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HomePageContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentCountArgs} args - Arguments to filter HomePageContents to count.
+     * @example
+     * // Count the number of HomePageContents
+     * const count = await prisma.homePageContent.count({
+     *   where: {
+     *     // ... the filter for the HomePageContents we want to count
+     *   }
+     * })
+    **/
+    count<T extends HomePageContentCountArgs>(
+      args?: Subset<T, HomePageContentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HomePageContentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HomePageContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HomePageContentAggregateArgs>(args: Subset<T, HomePageContentAggregateArgs>): Prisma.PrismaPromise<GetHomePageContentAggregateType<T>>
+
+    /**
+     * Group by HomePageContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomePageContentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HomePageContentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HomePageContentGroupByArgs['orderBy'] }
+        : { orderBy?: HomePageContentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HomePageContentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHomePageContentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HomePageContent model
+   */
+  readonly fields: HomePageContentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HomePageContent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HomePageContentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    paragraphs<T extends HomePageContent$paragraphsArgs<ExtArgs> = {}>(args?: Subset<T, HomePageContent$paragraphsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HomePageContent model
+   */
+  interface HomePageContentFieldRefs {
+    readonly id: FieldRef<"HomePageContent", 'Int'>
+    readonly image: FieldRef<"HomePageContent", 'String'>
+    readonly heading: FieldRef<"HomePageContent", 'String'>
+    readonly createdAt: FieldRef<"HomePageContent", 'DateTime'>
+    readonly updatedAt: FieldRef<"HomePageContent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HomePageContent findUnique
+   */
+  export type HomePageContentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter, which HomePageContent to fetch.
+     */
+    where: HomePageContentWhereUniqueInput
+  }
+
+  /**
+   * HomePageContent findUniqueOrThrow
+   */
+  export type HomePageContentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter, which HomePageContent to fetch.
+     */
+    where: HomePageContentWhereUniqueInput
+  }
+
+  /**
+   * HomePageContent findFirst
+   */
+  export type HomePageContentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter, which HomePageContent to fetch.
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomePageContents to fetch.
+     */
+    orderBy?: HomePageContentOrderByWithRelationInput | HomePageContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HomePageContents.
+     */
+    cursor?: HomePageContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomePageContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomePageContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HomePageContents.
+     */
+    distinct?: HomePageContentScalarFieldEnum | HomePageContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomePageContent findFirstOrThrow
+   */
+  export type HomePageContentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter, which HomePageContent to fetch.
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomePageContents to fetch.
+     */
+    orderBy?: HomePageContentOrderByWithRelationInput | HomePageContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HomePageContents.
+     */
+    cursor?: HomePageContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomePageContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomePageContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HomePageContents.
+     */
+    distinct?: HomePageContentScalarFieldEnum | HomePageContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomePageContent findMany
+   */
+  export type HomePageContentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter, which HomePageContents to fetch.
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomePageContents to fetch.
+     */
+    orderBy?: HomePageContentOrderByWithRelationInput | HomePageContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HomePageContents.
+     */
+    cursor?: HomePageContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomePageContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomePageContents.
+     */
+    skip?: number
+    distinct?: HomePageContentScalarFieldEnum | HomePageContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomePageContent create
+   */
+  export type HomePageContentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HomePageContent.
+     */
+    data: XOR<HomePageContentCreateInput, HomePageContentUncheckedCreateInput>
+  }
+
+  /**
+   * HomePageContent createMany
+   */
+  export type HomePageContentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HomePageContents.
+     */
+    data: HomePageContentCreateManyInput | HomePageContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HomePageContent createManyAndReturn
+   */
+  export type HomePageContentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * The data used to create many HomePageContents.
+     */
+    data: HomePageContentCreateManyInput | HomePageContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HomePageContent update
+   */
+  export type HomePageContentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HomePageContent.
+     */
+    data: XOR<HomePageContentUpdateInput, HomePageContentUncheckedUpdateInput>
+    /**
+     * Choose, which HomePageContent to update.
+     */
+    where: HomePageContentWhereUniqueInput
+  }
+
+  /**
+   * HomePageContent updateMany
+   */
+  export type HomePageContentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HomePageContents.
+     */
+    data: XOR<HomePageContentUpdateManyMutationInput, HomePageContentUncheckedUpdateManyInput>
+    /**
+     * Filter which HomePageContents to update
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * Limit how many HomePageContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HomePageContent updateManyAndReturn
+   */
+  export type HomePageContentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * The data used to update HomePageContents.
+     */
+    data: XOR<HomePageContentUpdateManyMutationInput, HomePageContentUncheckedUpdateManyInput>
+    /**
+     * Filter which HomePageContents to update
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * Limit how many HomePageContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HomePageContent upsert
+   */
+  export type HomePageContentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HomePageContent to update in case it exists.
+     */
+    where: HomePageContentWhereUniqueInput
+    /**
+     * In case the HomePageContent found by the `where` argument doesn't exist, create a new HomePageContent with this data.
+     */
+    create: XOR<HomePageContentCreateInput, HomePageContentUncheckedCreateInput>
+    /**
+     * In case the HomePageContent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HomePageContentUpdateInput, HomePageContentUncheckedUpdateInput>
+  }
+
+  /**
+   * HomePageContent delete
+   */
+  export type HomePageContentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+    /**
+     * Filter which HomePageContent to delete.
+     */
+    where: HomePageContentWhereUniqueInput
+  }
+
+  /**
+   * HomePageContent deleteMany
+   */
+  export type HomePageContentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HomePageContents to delete
+     */
+    where?: HomePageContentWhereInput
+    /**
+     * Limit how many HomePageContents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HomePageContent.paragraphs
+   */
+  export type HomePageContent$paragraphsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    where?: ParagraphWhereInput
+    orderBy?: ParagraphOrderByWithRelationInput | ParagraphOrderByWithRelationInput[]
+    cursor?: ParagraphWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ParagraphScalarFieldEnum | ParagraphScalarFieldEnum[]
+  }
+
+  /**
+   * HomePageContent without action
+   */
+  export type HomePageContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomePageContent
+     */
+    select?: HomePageContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomePageContent
+     */
+    omit?: HomePageContentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HomePageContentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Paragraph
+   */
+
+  export type AggregateParagraph = {
+    _count: ParagraphCountAggregateOutputType | null
+    _avg: ParagraphAvgAggregateOutputType | null
+    _sum: ParagraphSumAggregateOutputType | null
+    _min: ParagraphMinAggregateOutputType | null
+    _max: ParagraphMaxAggregateOutputType | null
+  }
+
+  export type ParagraphAvgAggregateOutputType = {
+    id: number | null
+    contentId: number | null
+  }
+
+  export type ParagraphSumAggregateOutputType = {
+    id: number | null
+    contentId: number | null
+  }
+
+  export type ParagraphMinAggregateOutputType = {
+    id: number | null
+    text: string | null
+    contentId: number | null
+  }
+
+  export type ParagraphMaxAggregateOutputType = {
+    id: number | null
+    text: string | null
+    contentId: number | null
+  }
+
+  export type ParagraphCountAggregateOutputType = {
+    id: number
+    text: number
+    contentId: number
+    _all: number
+  }
+
+
+  export type ParagraphAvgAggregateInputType = {
+    id?: true
+    contentId?: true
+  }
+
+  export type ParagraphSumAggregateInputType = {
+    id?: true
+    contentId?: true
+  }
+
+  export type ParagraphMinAggregateInputType = {
+    id?: true
+    text?: true
+    contentId?: true
+  }
+
+  export type ParagraphMaxAggregateInputType = {
+    id?: true
+    text?: true
+    contentId?: true
+  }
+
+  export type ParagraphCountAggregateInputType = {
+    id?: true
+    text?: true
+    contentId?: true
+    _all?: true
+  }
+
+  export type ParagraphAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Paragraph to aggregate.
+     */
+    where?: ParagraphWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Paragraphs to fetch.
+     */
+    orderBy?: ParagraphOrderByWithRelationInput | ParagraphOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ParagraphWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Paragraphs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Paragraphs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Paragraphs
+    **/
+    _count?: true | ParagraphCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ParagraphAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ParagraphSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ParagraphMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ParagraphMaxAggregateInputType
+  }
+
+  export type GetParagraphAggregateType<T extends ParagraphAggregateArgs> = {
+        [P in keyof T & keyof AggregateParagraph]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateParagraph[P]>
+      : GetScalarType<T[P], AggregateParagraph[P]>
+  }
+
+
+
+
+  export type ParagraphGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParagraphWhereInput
+    orderBy?: ParagraphOrderByWithAggregationInput | ParagraphOrderByWithAggregationInput[]
+    by: ParagraphScalarFieldEnum[] | ParagraphScalarFieldEnum
+    having?: ParagraphScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ParagraphCountAggregateInputType | true
+    _avg?: ParagraphAvgAggregateInputType
+    _sum?: ParagraphSumAggregateInputType
+    _min?: ParagraphMinAggregateInputType
+    _max?: ParagraphMaxAggregateInputType
+  }
+
+  export type ParagraphGroupByOutputType = {
+    id: number
+    text: string
+    contentId: number
+    _count: ParagraphCountAggregateOutputType | null
+    _avg: ParagraphAvgAggregateOutputType | null
+    _sum: ParagraphSumAggregateOutputType | null
+    _min: ParagraphMinAggregateOutputType | null
+    _max: ParagraphMaxAggregateOutputType | null
+  }
+
+  type GetParagraphGroupByPayload<T extends ParagraphGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ParagraphGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ParagraphGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ParagraphGroupByOutputType[P]>
+            : GetScalarType<T[P], ParagraphGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ParagraphSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    contentId?: boolean
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paragraph"]>
+
+  export type ParagraphSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    contentId?: boolean
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paragraph"]>
+
+  export type ParagraphSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    contentId?: boolean
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paragraph"]>
+
+  export type ParagraphSelectScalar = {
+    id?: boolean
+    text?: boolean
+    contentId?: boolean
+  }
+
+  export type ParagraphOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "contentId", ExtArgs["result"]["paragraph"]>
+  export type ParagraphInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }
+  export type ParagraphIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }
+  export type ParagraphIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    content?: boolean | HomePageContentDefaultArgs<ExtArgs>
+  }
+
+  export type $ParagraphPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Paragraph"
+    objects: {
+      content: Prisma.$HomePageContentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      text: string
+      contentId: number
+    }, ExtArgs["result"]["paragraph"]>
+    composites: {}
+  }
+
+  type ParagraphGetPayload<S extends boolean | null | undefined | ParagraphDefaultArgs> = $Result.GetResult<Prisma.$ParagraphPayload, S>
+
+  type ParagraphCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ParagraphFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ParagraphCountAggregateInputType | true
+    }
+
+  export interface ParagraphDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Paragraph'], meta: { name: 'Paragraph' } }
+    /**
+     * Find zero or one Paragraph that matches the filter.
+     * @param {ParagraphFindUniqueArgs} args - Arguments to find a Paragraph
+     * @example
+     * // Get one Paragraph
+     * const paragraph = await prisma.paragraph.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ParagraphFindUniqueArgs>(args: SelectSubset<T, ParagraphFindUniqueArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Paragraph that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ParagraphFindUniqueOrThrowArgs} args - Arguments to find a Paragraph
+     * @example
+     * // Get one Paragraph
+     * const paragraph = await prisma.paragraph.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ParagraphFindUniqueOrThrowArgs>(args: SelectSubset<T, ParagraphFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Paragraph that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphFindFirstArgs} args - Arguments to find a Paragraph
+     * @example
+     * // Get one Paragraph
+     * const paragraph = await prisma.paragraph.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ParagraphFindFirstArgs>(args?: SelectSubset<T, ParagraphFindFirstArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Paragraph that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphFindFirstOrThrowArgs} args - Arguments to find a Paragraph
+     * @example
+     * // Get one Paragraph
+     * const paragraph = await prisma.paragraph.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ParagraphFindFirstOrThrowArgs>(args?: SelectSubset<T, ParagraphFindFirstOrThrowArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Paragraphs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Paragraphs
+     * const paragraphs = await prisma.paragraph.findMany()
+     * 
+     * // Get first 10 Paragraphs
+     * const paragraphs = await prisma.paragraph.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paragraphWithIdOnly = await prisma.paragraph.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ParagraphFindManyArgs>(args?: SelectSubset<T, ParagraphFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Paragraph.
+     * @param {ParagraphCreateArgs} args - Arguments to create a Paragraph.
+     * @example
+     * // Create one Paragraph
+     * const Paragraph = await prisma.paragraph.create({
+     *   data: {
+     *     // ... data to create a Paragraph
+     *   }
+     * })
+     * 
+     */
+    create<T extends ParagraphCreateArgs>(args: SelectSubset<T, ParagraphCreateArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Paragraphs.
+     * @param {ParagraphCreateManyArgs} args - Arguments to create many Paragraphs.
+     * @example
+     * // Create many Paragraphs
+     * const paragraph = await prisma.paragraph.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ParagraphCreateManyArgs>(args?: SelectSubset<T, ParagraphCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Paragraphs and returns the data saved in the database.
+     * @param {ParagraphCreateManyAndReturnArgs} args - Arguments to create many Paragraphs.
+     * @example
+     * // Create many Paragraphs
+     * const paragraph = await prisma.paragraph.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Paragraphs and only return the `id`
+     * const paragraphWithIdOnly = await prisma.paragraph.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ParagraphCreateManyAndReturnArgs>(args?: SelectSubset<T, ParagraphCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Paragraph.
+     * @param {ParagraphDeleteArgs} args - Arguments to delete one Paragraph.
+     * @example
+     * // Delete one Paragraph
+     * const Paragraph = await prisma.paragraph.delete({
+     *   where: {
+     *     // ... filter to delete one Paragraph
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ParagraphDeleteArgs>(args: SelectSubset<T, ParagraphDeleteArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Paragraph.
+     * @param {ParagraphUpdateArgs} args - Arguments to update one Paragraph.
+     * @example
+     * // Update one Paragraph
+     * const paragraph = await prisma.paragraph.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ParagraphUpdateArgs>(args: SelectSubset<T, ParagraphUpdateArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Paragraphs.
+     * @param {ParagraphDeleteManyArgs} args - Arguments to filter Paragraphs to delete.
+     * @example
+     * // Delete a few Paragraphs
+     * const { count } = await prisma.paragraph.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ParagraphDeleteManyArgs>(args?: SelectSubset<T, ParagraphDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Paragraphs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Paragraphs
+     * const paragraph = await prisma.paragraph.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ParagraphUpdateManyArgs>(args: SelectSubset<T, ParagraphUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Paragraphs and returns the data updated in the database.
+     * @param {ParagraphUpdateManyAndReturnArgs} args - Arguments to update many Paragraphs.
+     * @example
+     * // Update many Paragraphs
+     * const paragraph = await prisma.paragraph.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Paragraphs and only return the `id`
+     * const paragraphWithIdOnly = await prisma.paragraph.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ParagraphUpdateManyAndReturnArgs>(args: SelectSubset<T, ParagraphUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Paragraph.
+     * @param {ParagraphUpsertArgs} args - Arguments to update or create a Paragraph.
+     * @example
+     * // Update or create a Paragraph
+     * const paragraph = await prisma.paragraph.upsert({
+     *   create: {
+     *     // ... data to create a Paragraph
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Paragraph we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ParagraphUpsertArgs>(args: SelectSubset<T, ParagraphUpsertArgs<ExtArgs>>): Prisma__ParagraphClient<$Result.GetResult<Prisma.$ParagraphPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Paragraphs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphCountArgs} args - Arguments to filter Paragraphs to count.
+     * @example
+     * // Count the number of Paragraphs
+     * const count = await prisma.paragraph.count({
+     *   where: {
+     *     // ... the filter for the Paragraphs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ParagraphCountArgs>(
+      args?: Subset<T, ParagraphCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ParagraphCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Paragraph.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ParagraphAggregateArgs>(args: Subset<T, ParagraphAggregateArgs>): Prisma.PrismaPromise<GetParagraphAggregateType<T>>
+
+    /**
+     * Group by Paragraph.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParagraphGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ParagraphGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ParagraphGroupByArgs['orderBy'] }
+        : { orderBy?: ParagraphGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ParagraphGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetParagraphGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Paragraph model
+   */
+  readonly fields: ParagraphFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Paragraph.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ParagraphClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    content<T extends HomePageContentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HomePageContentDefaultArgs<ExtArgs>>): Prisma__HomePageContentClient<$Result.GetResult<Prisma.$HomePageContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Paragraph model
+   */
+  interface ParagraphFieldRefs {
+    readonly id: FieldRef<"Paragraph", 'Int'>
+    readonly text: FieldRef<"Paragraph", 'String'>
+    readonly contentId: FieldRef<"Paragraph", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Paragraph findUnique
+   */
+  export type ParagraphFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter, which Paragraph to fetch.
+     */
+    where: ParagraphWhereUniqueInput
+  }
+
+  /**
+   * Paragraph findUniqueOrThrow
+   */
+  export type ParagraphFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter, which Paragraph to fetch.
+     */
+    where: ParagraphWhereUniqueInput
+  }
+
+  /**
+   * Paragraph findFirst
+   */
+  export type ParagraphFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter, which Paragraph to fetch.
+     */
+    where?: ParagraphWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Paragraphs to fetch.
+     */
+    orderBy?: ParagraphOrderByWithRelationInput | ParagraphOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Paragraphs.
+     */
+    cursor?: ParagraphWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Paragraphs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Paragraphs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Paragraphs.
+     */
+    distinct?: ParagraphScalarFieldEnum | ParagraphScalarFieldEnum[]
+  }
+
+  /**
+   * Paragraph findFirstOrThrow
+   */
+  export type ParagraphFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter, which Paragraph to fetch.
+     */
+    where?: ParagraphWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Paragraphs to fetch.
+     */
+    orderBy?: ParagraphOrderByWithRelationInput | ParagraphOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Paragraphs.
+     */
+    cursor?: ParagraphWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Paragraphs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Paragraphs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Paragraphs.
+     */
+    distinct?: ParagraphScalarFieldEnum | ParagraphScalarFieldEnum[]
+  }
+
+  /**
+   * Paragraph findMany
+   */
+  export type ParagraphFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter, which Paragraphs to fetch.
+     */
+    where?: ParagraphWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Paragraphs to fetch.
+     */
+    orderBy?: ParagraphOrderByWithRelationInput | ParagraphOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Paragraphs.
+     */
+    cursor?: ParagraphWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Paragraphs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Paragraphs.
+     */
+    skip?: number
+    distinct?: ParagraphScalarFieldEnum | ParagraphScalarFieldEnum[]
+  }
+
+  /**
+   * Paragraph create
+   */
+  export type ParagraphCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Paragraph.
+     */
+    data: XOR<ParagraphCreateInput, ParagraphUncheckedCreateInput>
+  }
+
+  /**
+   * Paragraph createMany
+   */
+  export type ParagraphCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Paragraphs.
+     */
+    data: ParagraphCreateManyInput | ParagraphCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Paragraph createManyAndReturn
+   */
+  export type ParagraphCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * The data used to create many Paragraphs.
+     */
+    data: ParagraphCreateManyInput | ParagraphCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Paragraph update
+   */
+  export type ParagraphUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Paragraph.
+     */
+    data: XOR<ParagraphUpdateInput, ParagraphUncheckedUpdateInput>
+    /**
+     * Choose, which Paragraph to update.
+     */
+    where: ParagraphWhereUniqueInput
+  }
+
+  /**
+   * Paragraph updateMany
+   */
+  export type ParagraphUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Paragraphs.
+     */
+    data: XOR<ParagraphUpdateManyMutationInput, ParagraphUncheckedUpdateManyInput>
+    /**
+     * Filter which Paragraphs to update
+     */
+    where?: ParagraphWhereInput
+    /**
+     * Limit how many Paragraphs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Paragraph updateManyAndReturn
+   */
+  export type ParagraphUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * The data used to update Paragraphs.
+     */
+    data: XOR<ParagraphUpdateManyMutationInput, ParagraphUncheckedUpdateManyInput>
+    /**
+     * Filter which Paragraphs to update
+     */
+    where?: ParagraphWhereInput
+    /**
+     * Limit how many Paragraphs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Paragraph upsert
+   */
+  export type ParagraphUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Paragraph to update in case it exists.
+     */
+    where: ParagraphWhereUniqueInput
+    /**
+     * In case the Paragraph found by the `where` argument doesn't exist, create a new Paragraph with this data.
+     */
+    create: XOR<ParagraphCreateInput, ParagraphUncheckedCreateInput>
+    /**
+     * In case the Paragraph was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ParagraphUpdateInput, ParagraphUncheckedUpdateInput>
+  }
+
+  /**
+   * Paragraph delete
+   */
+  export type ParagraphDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+    /**
+     * Filter which Paragraph to delete.
+     */
+    where: ParagraphWhereUniqueInput
+  }
+
+  /**
+   * Paragraph deleteMany
+   */
+  export type ParagraphDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Paragraphs to delete
+     */
+    where?: ParagraphWhereInput
+    /**
+     * Limit how many Paragraphs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Paragraph without action
+   */
+  export type ParagraphDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Paragraph
+     */
+    select?: ParagraphSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Paragraph
+     */
+    omit?: ParagraphOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParagraphInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4397,6 +6784,26 @@ export namespace Prisma {
   };
 
   export type ContactUsScalarFieldEnum = (typeof ContactUsScalarFieldEnum)[keyof typeof ContactUsScalarFieldEnum]
+
+
+  export const HomePageContentScalarFieldEnum: {
+    id: 'id',
+    image: 'image',
+    heading: 'heading',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HomePageContentScalarFieldEnum = (typeof HomePageContentScalarFieldEnum)[keyof typeof HomePageContentScalarFieldEnum]
+
+
+  export const ParagraphScalarFieldEnum: {
+    id: 'id',
+    text: 'text',
+    contentId: 'contentId'
+  };
+
+  export type ParagraphScalarFieldEnum = (typeof ParagraphScalarFieldEnum)[keyof typeof ParagraphScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4670,6 +7077,110 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter<"ContactUs"> | string
   }
 
+  export type HomePageContentWhereInput = {
+    AND?: HomePageContentWhereInput | HomePageContentWhereInput[]
+    OR?: HomePageContentWhereInput[]
+    NOT?: HomePageContentWhereInput | HomePageContentWhereInput[]
+    id?: IntFilter<"HomePageContent"> | number
+    image?: StringFilter<"HomePageContent"> | string
+    heading?: StringFilter<"HomePageContent"> | string
+    createdAt?: DateTimeFilter<"HomePageContent"> | Date | string
+    updatedAt?: DateTimeFilter<"HomePageContent"> | Date | string
+    paragraphs?: ParagraphListRelationFilter
+  }
+
+  export type HomePageContentOrderByWithRelationInput = {
+    id?: SortOrder
+    image?: SortOrder
+    heading?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    paragraphs?: ParagraphOrderByRelationAggregateInput
+  }
+
+  export type HomePageContentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HomePageContentWhereInput | HomePageContentWhereInput[]
+    OR?: HomePageContentWhereInput[]
+    NOT?: HomePageContentWhereInput | HomePageContentWhereInput[]
+    image?: StringFilter<"HomePageContent"> | string
+    heading?: StringFilter<"HomePageContent"> | string
+    createdAt?: DateTimeFilter<"HomePageContent"> | Date | string
+    updatedAt?: DateTimeFilter<"HomePageContent"> | Date | string
+    paragraphs?: ParagraphListRelationFilter
+  }, "id">
+
+  export type HomePageContentOrderByWithAggregationInput = {
+    id?: SortOrder
+    image?: SortOrder
+    heading?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HomePageContentCountOrderByAggregateInput
+    _avg?: HomePageContentAvgOrderByAggregateInput
+    _max?: HomePageContentMaxOrderByAggregateInput
+    _min?: HomePageContentMinOrderByAggregateInput
+    _sum?: HomePageContentSumOrderByAggregateInput
+  }
+
+  export type HomePageContentScalarWhereWithAggregatesInput = {
+    AND?: HomePageContentScalarWhereWithAggregatesInput | HomePageContentScalarWhereWithAggregatesInput[]
+    OR?: HomePageContentScalarWhereWithAggregatesInput[]
+    NOT?: HomePageContentScalarWhereWithAggregatesInput | HomePageContentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"HomePageContent"> | number
+    image?: StringWithAggregatesFilter<"HomePageContent"> | string
+    heading?: StringWithAggregatesFilter<"HomePageContent"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"HomePageContent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HomePageContent"> | Date | string
+  }
+
+  export type ParagraphWhereInput = {
+    AND?: ParagraphWhereInput | ParagraphWhereInput[]
+    OR?: ParagraphWhereInput[]
+    NOT?: ParagraphWhereInput | ParagraphWhereInput[]
+    id?: IntFilter<"Paragraph"> | number
+    text?: StringFilter<"Paragraph"> | string
+    contentId?: IntFilter<"Paragraph"> | number
+    content?: XOR<HomePageContentScalarRelationFilter, HomePageContentWhereInput>
+  }
+
+  export type ParagraphOrderByWithRelationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    contentId?: SortOrder
+    content?: HomePageContentOrderByWithRelationInput
+  }
+
+  export type ParagraphWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ParagraphWhereInput | ParagraphWhereInput[]
+    OR?: ParagraphWhereInput[]
+    NOT?: ParagraphWhereInput | ParagraphWhereInput[]
+    text?: StringFilter<"Paragraph"> | string
+    contentId?: IntFilter<"Paragraph"> | number
+    content?: XOR<HomePageContentScalarRelationFilter, HomePageContentWhereInput>
+  }, "id">
+
+  export type ParagraphOrderByWithAggregationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    contentId?: SortOrder
+    _count?: ParagraphCountOrderByAggregateInput
+    _avg?: ParagraphAvgOrderByAggregateInput
+    _max?: ParagraphMaxOrderByAggregateInput
+    _min?: ParagraphMinOrderByAggregateInput
+    _sum?: ParagraphSumOrderByAggregateInput
+  }
+
+  export type ParagraphScalarWhereWithAggregatesInput = {
+    AND?: ParagraphScalarWhereWithAggregatesInput | ParagraphScalarWhereWithAggregatesInput[]
+    OR?: ParagraphScalarWhereWithAggregatesInput[]
+    NOT?: ParagraphScalarWhereWithAggregatesInput | ParagraphScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Paragraph"> | number
+    text?: StringWithAggregatesFilter<"Paragraph"> | string
+    contentId?: IntWithAggregatesFilter<"Paragraph"> | number
+  }
+
   export type UserCreateInput = {
     email: string
     firstName: string
@@ -4851,6 +7362,101 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HomePageContentCreateInput = {
+    image: string
+    heading: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    paragraphs?: ParagraphCreateNestedManyWithoutContentInput
+  }
+
+  export type HomePageContentUncheckedCreateInput = {
+    id?: number
+    image: string
+    heading: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    paragraphs?: ParagraphUncheckedCreateNestedManyWithoutContentInput
+  }
+
+  export type HomePageContentUpdateInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    paragraphs?: ParagraphUpdateManyWithoutContentNestedInput
+  }
+
+  export type HomePageContentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    paragraphs?: ParagraphUncheckedUpdateManyWithoutContentNestedInput
+  }
+
+  export type HomePageContentCreateManyInput = {
+    id?: number
+    image: string
+    heading: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HomePageContentUpdateManyMutationInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HomePageContentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParagraphCreateInput = {
+    text: string
+    content: HomePageContentCreateNestedOneWithoutParagraphsInput
+  }
+
+  export type ParagraphUncheckedCreateInput = {
+    id?: number
+    text: string
+    contentId: number
+  }
+
+  export type ParagraphUpdateInput = {
+    text?: StringFieldUpdateOperationsInput | string
+    content?: HomePageContentUpdateOneRequiredWithoutParagraphsNestedInput
+  }
+
+  export type ParagraphUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
+    contentId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ParagraphCreateManyInput = {
+    id?: number
+    text: string
+    contentId: number
+  }
+
+  export type ParagraphUpdateManyMutationInput = {
+    text?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ParagraphUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
+    contentId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5123,6 +7729,81 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type ParagraphListRelationFilter = {
+    every?: ParagraphWhereInput
+    some?: ParagraphWhereInput
+    none?: ParagraphWhereInput
+  }
+
+  export type ParagraphOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HomePageContentCountOrderByAggregateInput = {
+    id?: SortOrder
+    image?: SortOrder
+    heading?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomePageContentAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HomePageContentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    image?: SortOrder
+    heading?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomePageContentMinOrderByAggregateInput = {
+    id?: SortOrder
+    image?: SortOrder
+    heading?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomePageContentSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HomePageContentScalarRelationFilter = {
+    is?: HomePageContentWhereInput
+    isNot?: HomePageContentWhereInput
+  }
+
+  export type ParagraphCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    contentId?: SortOrder
+  }
+
+  export type ParagraphAvgOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+  }
+
+  export type ParagraphMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    contentId?: SortOrder
+  }
+
+  export type ParagraphMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    contentId?: SortOrder
+  }
+
+  export type ParagraphSumOrderByAggregateInput = {
+    id?: SortOrder
+    contentId?: SortOrder
+  }
+
   export type UserTokenCreateNestedManyWithoutUserInput = {
     create?: XOR<UserTokenCreateWithoutUserInput, UserTokenUncheckedCreateWithoutUserInput> | UserTokenCreateWithoutUserInput[] | UserTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserTokenCreateOrConnectWithoutUserInput | UserTokenCreateOrConnectWithoutUserInput[]
@@ -5201,6 +7882,62 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutTokenInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTokenInput, UserUpdateWithoutTokenInput>, UserUncheckedUpdateWithoutTokenInput>
+  }
+
+  export type ParagraphCreateNestedManyWithoutContentInput = {
+    create?: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput> | ParagraphCreateWithoutContentInput[] | ParagraphUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: ParagraphCreateOrConnectWithoutContentInput | ParagraphCreateOrConnectWithoutContentInput[]
+    createMany?: ParagraphCreateManyContentInputEnvelope
+    connect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+  }
+
+  export type ParagraphUncheckedCreateNestedManyWithoutContentInput = {
+    create?: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput> | ParagraphCreateWithoutContentInput[] | ParagraphUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: ParagraphCreateOrConnectWithoutContentInput | ParagraphCreateOrConnectWithoutContentInput[]
+    createMany?: ParagraphCreateManyContentInputEnvelope
+    connect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+  }
+
+  export type ParagraphUpdateManyWithoutContentNestedInput = {
+    create?: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput> | ParagraphCreateWithoutContentInput[] | ParagraphUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: ParagraphCreateOrConnectWithoutContentInput | ParagraphCreateOrConnectWithoutContentInput[]
+    upsert?: ParagraphUpsertWithWhereUniqueWithoutContentInput | ParagraphUpsertWithWhereUniqueWithoutContentInput[]
+    createMany?: ParagraphCreateManyContentInputEnvelope
+    set?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    disconnect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    delete?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    connect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    update?: ParagraphUpdateWithWhereUniqueWithoutContentInput | ParagraphUpdateWithWhereUniqueWithoutContentInput[]
+    updateMany?: ParagraphUpdateManyWithWhereWithoutContentInput | ParagraphUpdateManyWithWhereWithoutContentInput[]
+    deleteMany?: ParagraphScalarWhereInput | ParagraphScalarWhereInput[]
+  }
+
+  export type ParagraphUncheckedUpdateManyWithoutContentNestedInput = {
+    create?: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput> | ParagraphCreateWithoutContentInput[] | ParagraphUncheckedCreateWithoutContentInput[]
+    connectOrCreate?: ParagraphCreateOrConnectWithoutContentInput | ParagraphCreateOrConnectWithoutContentInput[]
+    upsert?: ParagraphUpsertWithWhereUniqueWithoutContentInput | ParagraphUpsertWithWhereUniqueWithoutContentInput[]
+    createMany?: ParagraphCreateManyContentInputEnvelope
+    set?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    disconnect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    delete?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    connect?: ParagraphWhereUniqueInput | ParagraphWhereUniqueInput[]
+    update?: ParagraphUpdateWithWhereUniqueWithoutContentInput | ParagraphUpdateWithWhereUniqueWithoutContentInput[]
+    updateMany?: ParagraphUpdateManyWithWhereWithoutContentInput | ParagraphUpdateManyWithWhereWithoutContentInput[]
+    deleteMany?: ParagraphScalarWhereInput | ParagraphScalarWhereInput[]
+  }
+
+  export type HomePageContentCreateNestedOneWithoutParagraphsInput = {
+    create?: XOR<HomePageContentCreateWithoutParagraphsInput, HomePageContentUncheckedCreateWithoutParagraphsInput>
+    connectOrCreate?: HomePageContentCreateOrConnectWithoutParagraphsInput
+    connect?: HomePageContentWhereUniqueInput
+  }
+
+  export type HomePageContentUpdateOneRequiredWithoutParagraphsNestedInput = {
+    create?: XOR<HomePageContentCreateWithoutParagraphsInput, HomePageContentUncheckedCreateWithoutParagraphsInput>
+    connectOrCreate?: HomePageContentCreateOrConnectWithoutParagraphsInput
+    upsert?: HomePageContentUpsertWithoutParagraphsInput
+    connect?: HomePageContentWhereUniqueInput
+    update?: XOR<XOR<HomePageContentUpdateToOneWithWhereWithoutParagraphsInput, HomePageContentUpdateWithoutParagraphsInput>, HomePageContentUncheckedUpdateWithoutParagraphsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5472,6 +8209,96 @@ export namespace Prisma {
     otpExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type ParagraphCreateWithoutContentInput = {
+    text: string
+  }
+
+  export type ParagraphUncheckedCreateWithoutContentInput = {
+    id?: number
+    text: string
+  }
+
+  export type ParagraphCreateOrConnectWithoutContentInput = {
+    where: ParagraphWhereUniqueInput
+    create: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput>
+  }
+
+  export type ParagraphCreateManyContentInputEnvelope = {
+    data: ParagraphCreateManyContentInput | ParagraphCreateManyContentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ParagraphUpsertWithWhereUniqueWithoutContentInput = {
+    where: ParagraphWhereUniqueInput
+    update: XOR<ParagraphUpdateWithoutContentInput, ParagraphUncheckedUpdateWithoutContentInput>
+    create: XOR<ParagraphCreateWithoutContentInput, ParagraphUncheckedCreateWithoutContentInput>
+  }
+
+  export type ParagraphUpdateWithWhereUniqueWithoutContentInput = {
+    where: ParagraphWhereUniqueInput
+    data: XOR<ParagraphUpdateWithoutContentInput, ParagraphUncheckedUpdateWithoutContentInput>
+  }
+
+  export type ParagraphUpdateManyWithWhereWithoutContentInput = {
+    where: ParagraphScalarWhereInput
+    data: XOR<ParagraphUpdateManyMutationInput, ParagraphUncheckedUpdateManyWithoutContentInput>
+  }
+
+  export type ParagraphScalarWhereInput = {
+    AND?: ParagraphScalarWhereInput | ParagraphScalarWhereInput[]
+    OR?: ParagraphScalarWhereInput[]
+    NOT?: ParagraphScalarWhereInput | ParagraphScalarWhereInput[]
+    id?: IntFilter<"Paragraph"> | number
+    text?: StringFilter<"Paragraph"> | string
+    contentId?: IntFilter<"Paragraph"> | number
+  }
+
+  export type HomePageContentCreateWithoutParagraphsInput = {
+    image: string
+    heading: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HomePageContentUncheckedCreateWithoutParagraphsInput = {
+    id?: number
+    image: string
+    heading: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HomePageContentCreateOrConnectWithoutParagraphsInput = {
+    where: HomePageContentWhereUniqueInput
+    create: XOR<HomePageContentCreateWithoutParagraphsInput, HomePageContentUncheckedCreateWithoutParagraphsInput>
+  }
+
+  export type HomePageContentUpsertWithoutParagraphsInput = {
+    update: XOR<HomePageContentUpdateWithoutParagraphsInput, HomePageContentUncheckedUpdateWithoutParagraphsInput>
+    create: XOR<HomePageContentCreateWithoutParagraphsInput, HomePageContentUncheckedCreateWithoutParagraphsInput>
+    where?: HomePageContentWhereInput
+  }
+
+  export type HomePageContentUpdateToOneWithWhereWithoutParagraphsInput = {
+    where?: HomePageContentWhereInput
+    data: XOR<HomePageContentUpdateWithoutParagraphsInput, HomePageContentUncheckedUpdateWithoutParagraphsInput>
+  }
+
+  export type HomePageContentUpdateWithoutParagraphsInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HomePageContentUncheckedUpdateWithoutParagraphsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    image?: StringFieldUpdateOperationsInput | string
+    heading?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserTokenCreateManyUserInput = {
     id?: number
     token: string
@@ -5497,6 +8324,25 @@ export namespace Prisma {
     token?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParagraphCreateManyContentInput = {
+    id?: number
+    text: string
+  }
+
+  export type ParagraphUpdateWithoutContentInput = {
+    text?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ParagraphUncheckedUpdateWithoutContentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ParagraphUncheckedUpdateManyWithoutContentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -147,6 +147,20 @@ exports.Prisma.ContactUsScalarFieldEnum = {
   message: 'message'
 };
 
+exports.Prisma.HomePageContentScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  heading: 'heading',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ParagraphScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  contentId: 'contentId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -166,7 +180,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   UserToken: 'UserToken',
-  ContactUs: 'ContactUs'
+  ContactUs: 'ContactUs',
+  HomePageContent: 'HomePageContent',
+  Paragraph: 'Paragraph'
 };
 
 /**

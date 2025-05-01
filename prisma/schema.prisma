@@ -38,16 +38,21 @@ model ContactUs {
   message String
 }
 
-model Products {
-  id           Int     @id @default(autoincrement())
-  image String
-  name         String
-  description1 String
-  description2 String
-  price        Float
-  origin       String
-  isOrganic    Boolean
-  isVirgin     Boolean
-  variant    String[]
-  quantiy  Int @default(0)
+
+
+model HomePageContent {
+  id         Int         @id @default(autoincrement())
+  image      String
+  heading    String
+  paragraphs Paragraph[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
+
+model Paragraph {
+  id        Int      @id @default(autoincrement())
+  text      String
+  content   HomePageContent  @relation(fields: [contentId], references: [id])
+  contentId Int
+}
+

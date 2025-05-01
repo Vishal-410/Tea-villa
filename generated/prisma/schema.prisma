@@ -29,3 +29,27 @@ model UserToken {
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model ContactUs {
+  id      Int    @id @default(autoincrement())
+  name    String
+  phone   String
+  email   String
+  message String
+}
+
+model HomePageContent {
+  id         Int         @id @default(autoincrement())
+  image      String
+  heading    String
+  paragraphs Paragraph[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Paragraph {
+  id        Int             @id @default(autoincrement())
+  text      String
+  content   HomePageContent @relation(fields: [contentId], references: [id])
+  contentId Int
+}
