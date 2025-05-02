@@ -38,8 +38,6 @@ model ContactUs {
   message String
 }
 
-
-
 model HomePageContent {
   id         Int         @id @default(autoincrement())
   image      String
@@ -50,9 +48,22 @@ model HomePageContent {
 }
 
 model Paragraph {
-  id        Int      @id @default(autoincrement())
+  id        Int             @id @default(autoincrement())
   text      String
-  content   HomePageContent  @relation(fields: [contentId], references: [id])
+  content   HomePageContent @relation(fields: [contentId], references: [id])
   contentId Int
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  name       String
+  collection String
+  origin     String
+  flavour    String
+  qualities  String[]
+  cafiene    String
+  Allegens   String
+  isOrganic  Boolean
+  isVegan    Boolean
 }
 

@@ -8,6 +8,8 @@ import { join } from 'path';
 import { PrismaService } from './prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { ContactusModule } from './contactus/contactus.module';
+import { HomeModule } from './home/home.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { ContactusModule } from './contactus/contactus.module';
     UserModule,
     AuthModule,
     ContactusModule,
+    HomeModule,
+    UploadModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
