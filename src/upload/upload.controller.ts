@@ -15,7 +15,7 @@ export class UploadController {
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
     if (!file) throw new Error('No file uploaded');
 
-    const result = await uploadToCloudinary(file.buffer, 'products');
+    const result = await uploadToCloudinary(file.buffer, 'teaVilla');
 
     return { url: result.secure_url };
   }

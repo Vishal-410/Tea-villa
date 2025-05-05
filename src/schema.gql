@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type User {
-  id: Int!
+  id: String!
   firstName: String!
   lastName: String!
   email: String!
@@ -17,15 +17,120 @@ type JwtAuthResponse {
 }
 
 type Contactus {
-  id: Int!
+  id: String!
   name: String!
   phone: String!
   email: String!
   message: String!
 }
 
+type Home {
+  """Unique identifier for the homepage content"""
+  id: String!
+
+  """Image URL or path for the homepage content"""
+  image: String!
+
+  """Heading text for the homepage content"""
+  heading: String!
+
+  """List of paragraphs associated with the homepage content"""
+  paragraphs: [Paragraph!]!
+
+  """When the homepage content was created"""
+  createdAt: DateTime!
+
+  """When the homepage content was last updated"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Paragraph {
+  """Unique identifier for the paragraph"""
+  id: String!
+
+  """Text content of the paragraph"""
+  text: String!
+}
+
+type Variant {
+  id: String!
+  size: String!
+  price: Float!
+}
+
+type Product {
+  id: String!
+  name: String!
+  collection: String!
+  flavour: String!
+  origin: String!
+  qualities: [String!]!
+  caffeine: Boolean!
+  allegens: [String!]!
+  isOrganic: Boolean!
+  isVegan: Boolean!
+  variants: [Variant!]!
+}
+
+type Cart {
+  """Unique identifier for the cart"""
+  id: String!
+
+  """ID of the user who owns the cart"""
+  userId: Int!
+
+  """List of items in the cart"""
+  items: [CartItem!]!
+
+  """When the cart was created"""
+  createdAt: DateTime!
+
+  """When the cart was last updated"""
+  updatedAt: DateTime!
+}
+
+type CartItem {
+  """Unique identifier for the cart item"""
+  id: String!
+
+  """ID of the variant being added to the cart"""
+  variantId: Int!
+
+  """Quantity of the product variant"""
+  quantity: Int!
+}
+
+type Blog {
+  id: String!
+  heading: String!
+  image: String!
+  paragraphs: [BlogParagraph!]!
+}
+
+type BlogParagraph {
+  id: String!
+  text: String!
+}
+
+type Wishlist {
+  """Example field (placeholder)"""
+  id: String!
+}
+
 type Query {
   logoutUser: Boolean!
+  homes: [Home!]!
+  home(id: String!): Home!
+  products: [Product!]!
+  product(id: String!): Product!
+  cart(id: String!): Cart!
+  blog(id: String!): Blog!
+  wishlist: [Wishlist!]!
 }
 
 type Mutation {
@@ -35,6 +140,17 @@ type Mutation {
   verifyOtp(email: String!, otp: String!): JwtAuthResponse!
   loginWithGoogle(idToken: String!): JwtAuthResponse!
   createContactus(createContactusInput: CreateContactusInput!): Contactus!
+  createHome(createHomeInput: CreateHomeInput!): Home!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  product(id: String!): Product!
+  createCart(createCartInput: CreateCartInput!): Cart!
+  removeItem(userId: String!, variantId: String!): Cart!
+  createBlog(createBlogInput: CreateBlogInput!): Blog!
+  updateBlog(updateBlogInput: UpdateBlogInput!): Blog!
+  removeBlog(id: String!): Blog!
+  createWishlist(productId: String!): Wishlist!
+  deleteAll: Boolean!
+  removeWishlist(id: String!): Wishlist!
 }
 
 input CreateUserInput {
@@ -55,4 +171,67 @@ input CreateContactusInput {
   phone: String!
   email: String!
   message: String!
+}
+
+input CreateHomeInput {
+  """Image URL or path for the homepage content"""
+  image: String!
+
+  """Heading text for the homepage content"""
+  heading: String!
+
+  """List of paragraphs associated with the homepage content"""
+  paragraphs: [CreateParagraphInput!]!
+
+  """When the homepage content is created"""
+  createdAt: DateTime!
+
+  """When the homepage content is last updated"""
+  updatedAt: DateTime!
+}
+
+input CreateParagraphInput {
+  """Text content of the paragraph"""
+  text: String!
+}
+
+input CreateProductInput {
+  image: String!
+  name: String!
+  collection: String!
+  flavour: String!
+  origin: String!
+  qualities: [String!]!
+  caffeine: Boolean!
+  allegens: [String!]!
+  isOrganic: Boolean!
+  isVegan: Boolean!
+  variants: [CreateVariantInput!]!
+}
+
+input CreateVariantInput {
+  size: String!
+  price: Float!
+}
+
+input CreateCartInput {
+  variantId: String!
+  quantity: Int!
+}
+
+input CreateBlogInput {
+  heading: String!
+  image: String!
+  paragraphs: [CreateBlogParagraphInput!]!
+}
+
+input CreateBlogParagraphInput {
+  text: String!
+}
+
+input UpdateBlogInput {
+  heading: String
+  image: String
+  paragraphs: [CreateBlogParagraphInput!]
+  id: String!
 }

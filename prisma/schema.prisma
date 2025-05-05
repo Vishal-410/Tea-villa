@@ -1,4 +1,3 @@
-// schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -10,20 +9,22 @@ datasource db {
 }
 
 model User {
-  id           Int         @id @default(autoincrement())
+  id           String      @id @default(uuid())
   email        String      @unique
   firstName    String
   lastName     String
-  phone        String      @unique // Changed to String to store phone numbers as text
+  phone        String      @unique
   password     String
   otp          String?
   otpExpiresAt DateTime?
   token        UserToken[]
+  cart         Cart?
+  wishlists    WishList[]
 }
 
 model UserToken {
-  id        Int      @id @default(autoincrement())
-  userId    Int
+  id        String   @id @default(uuid())
+  userId    String
   token     String   @unique
   createdAt DateTime @default(now())
   expiresAt DateTime
@@ -31,15 +32,14 @@ model UserToken {
 }
 
 model ContactUs {
-  id      Int    @id @default(autoincrement())
-  name    String
+  id      String @id @default(uuid())
   phone   String
   email   String
   message String
 }
 
 model HomePageContent {
-  id         Int         @id @default(autoincrement())
+  id         String      @id @default(uuid())
   image      String
   heading    String
   paragraphs Paragraph[]
@@ -48,22 +48,79 @@ model HomePageContent {
 }
 
 model Paragraph {
-  id        Int             @id @default(autoincrement())
+  id        String          @id @default(uuid())
   text      String
   content   HomePageContent @relation(fields: [contentId], references: [id])
-  contentId Int
+  contentId String
+}
+
+model Blog {
+  id         String          @id @default(uuid())
+  heading    String
+  image      String
+  paragraphs BlogParagraph[]
+}
+
+model BlogParagraph {
+  id     String @id @default(uuid())
+  text   String
+  blogId String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
+}
+
+model WishList {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
+  id         String     @id @default(uuid())
+  image      String
   name       String
   collection String
-  origin     String
   flavour    String
+  origin     String
   qualities  String[]
-  cafiene    String
-  Allegens   String
+  caffeine   Boolean
+  allegens   String[]
   isOrganic  Boolean
   isVegan    Boolean
+  variants   Variant[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  wishlists  WishList[]
 }
 
+model Variant {
+  id        String     @id @default(uuid())
+  size      String
+  price     Float
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  CartItem  CartItem[]
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  variant   Variant @relation(fields: [variantId], references: [id])
+  variantId String
+  quantity  Int
+}

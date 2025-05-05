@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { HomeService } from './home.service';
 import { Home } from './entities/home.entity';
 import { CreateHomeInput } from './dto/create-home.input';
@@ -13,23 +13,14 @@ export class HomeResolver {
     return this.homeService.create(createHomeInput);
   }
 
-  @Query(() => [Home], { name: 'home' })
+  @Query(() => [Home], { name: 'homes' }) // Changed to 'homes' as it's a list
   findAll() {
     return this.homeService.findAll();
   }
 
   @Query(() => Home, { name: 'home' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) { // ID should be string
     return this.homeService.findOne(id);
   }
 
-  @Mutation(() => Home)
-  updateHome(@Args('updateHomeInput') updateHomeInput: UpdateHomeInput) {
-    return this.homeService.update(updateHomeInput.id, updateHomeInput);
-  }
-
-  @Mutation(() => Home)
-  removeHome(@Args('id', { type: () => Int }) id: number) {
-    return this.homeService.remove(id);
-  }
 }

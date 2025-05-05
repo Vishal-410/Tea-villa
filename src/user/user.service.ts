@@ -46,10 +46,6 @@ if (existingUser) {
 }
 
 
-    if (existingUser) {
-      throw new BadRequestException('User already exists');
-    }
-
     // Make sure to validate name and password if needed
 
     const userData = {
@@ -112,7 +108,7 @@ if (existingUser) {
     return existingUser;
   }
 
-  async findOne(userId: number): Promise<PrismaUser | null> {
+  async findOne(userId: string): Promise<PrismaUser | null> {
     return this.prisma.user.findUnique({
       where: { id: userId },
     });

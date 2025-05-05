@@ -141,7 +141,6 @@ exports.Prisma.UserTokenScalarFieldEnum = {
 
 exports.Prisma.ContactUsScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   phone: 'phone',
   email: 'email',
   message: 'message'
@@ -159,6 +158,63 @@ exports.Prisma.ParagraphScalarFieldEnum = {
   id: 'id',
   text: 'text',
   contentId: 'contentId'
+};
+
+exports.Prisma.BlogScalarFieldEnum = {
+  id: 'id',
+  heading: 'heading',
+  image: 'image'
+};
+
+exports.Prisma.BlogParagraphScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  blogId: 'blogId'
+};
+
+exports.Prisma.WishListScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  name: 'name',
+  collection: 'collection',
+  flavour: 'flavour',
+  origin: 'origin',
+  qualities: 'qualities',
+  caffeine: 'caffeine',
+  allegens: 'allegens',
+  isOrganic: 'isOrganic',
+  isVegan: 'isVegan',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VariantScalarFieldEnum = {
+  id: 'id',
+  size: 'size',
+  price: 'price',
+  productId: 'productId'
+};
+
+exports.Prisma.CartScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  variantId: 'variantId',
+  quantity: 'quantity'
 };
 
 exports.Prisma.SortOrder = {
@@ -182,7 +238,14 @@ exports.Prisma.ModelName = {
   UserToken: 'UserToken',
   ContactUs: 'ContactUs',
   HomePageContent: 'HomePageContent',
-  Paragraph: 'Paragraph'
+  Paragraph: 'Paragraph',
+  Blog: 'Blog',
+  BlogParagraph: 'BlogParagraph',
+  WishList: 'WishList',
+  Product: 'Product',
+  Variant: 'Variant',
+  Cart: 'Cart',
+  CartItem: 'CartItem'
 };
 
 /**

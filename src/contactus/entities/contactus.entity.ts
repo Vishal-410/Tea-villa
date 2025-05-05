@@ -3,8 +3,8 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class Contactus {
-  @Field(() => Int)
-  id: number;
+  @Field()
+  id: string;
 
   @Field()
   name: string;
