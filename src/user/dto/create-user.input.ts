@@ -1,17 +1,34 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
-// Custom Validator
-// @ValidatorConstraint({ name: 'EmailOrPhone', async: false })
-// class EmailOrPhoneConstraint implements ValidatorConstraintInterface {
-//   validate(_: any, args: ValidationArguments) {
-//     const obj = args.object as any;
-//     return !!(obj.email || obj.phone); // true if email or phone exists
-//   }
+@InputType()
+export class CreateUserAddressInput {
+  @Field()
+  fullName: string;
 
-//   defaultMessage(args: ValidationArguments) {
-//     return 'Either email or phone must be provided.';
-//   }
-// }
+  @Field()
+  phone: string;
+
+  @Field()
+  pincode: string;
+
+  @Field()
+  city: string;
+
+  @Field()
+  state: string;
+
+  @Field()
+  country: string;
+
+  @Field()
+  street: string;
+
+  @Field({ nullable: true })
+  landmark?: string;
+
+  @Field({ defaultValue: false })
+  isDefault?: boolean;
+}
 
 @InputType()
 export class CreateUserInput {
@@ -25,11 +42,20 @@ export class CreateUserInput {
   email: string;
 
   @Field()
-  phone:string;
+  phone: string;
 
   @Field()
   password: string;
 
-  // @Validate(EmailOrPhoneConstraint) // 👈 custom validation lagayi
-  // dummyField?: string; // dummy field just to trigger validation
+  @Field({ nullable: true })
+  profileImage?: string;
+
+  @Field({ nullable: true })
+  dateOfBirth?: string;
+
+  @Field({ nullable: true })
+  gender?: string;
+
+  @Field(() => [CreateUserAddressInput], { nullable: true })
+  addresses?: CreateUserAddressInput[];
 }

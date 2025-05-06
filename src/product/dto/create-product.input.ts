@@ -30,7 +30,7 @@ export class CreateProductInput {
   qualities: string[];
 
   @Field()
-  caffeine: boolean;
+  caffeine: string;
 
   @Field(()=>[String])
   allegens: string[];

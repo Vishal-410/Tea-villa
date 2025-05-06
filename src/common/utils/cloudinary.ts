@@ -7,20 +7,24 @@ cloudinary.config({
   api_secret: 'ajrEXCStCcRy8sA6I-hZb-Qa4AQ',
 });
 
-export const uploadToCloudinary = (fileBuffer: Buffer, folder: string): Promise<{ secure_url: string }> => {
+export const uploadToCloudinary = async (fileBuffer: Buffer,folder: string): Promise<string> => {
+  const bufferStream = new PassThrough();
+  bufferStream.end(fileBuffer);
+
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder },
       (error, result) => {
-        if (error) return reject(error);
-        if (!result) return reject(new Error('Upload failed'));
-        resolve(result);
-      }
+        if (error) {
+          reject(error);
+        } else if (!result) {
+          reject(new Error('Upload failed'));
+        } else {
+          resolve(result.secure_url); // ✅ only secure_url returned
+        }
+      },
     );
-    const bufferStream = new PassThrough();
-    bufferStream.end(fileBuffer);
-    bufferStream.pipe(stream);
+
+    bufferStream.pipe(stream); // fileBuffer is piped to Cloudinary stream
   });
 };
-
-export default cloudinary;

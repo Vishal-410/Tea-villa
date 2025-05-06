@@ -46,12 +46,24 @@ export class ProductService {
     });
   }
 
-  async findAll() {
-    return this.prisma.product.findMany({
-      include: {
-        variants: true,
-      },
-    });
+  async findAll(pageNumber: number = 1, pageSize: number) {
+    const skip = (pageNumber - 1) * pageSize;
+    const [items, totalItems] = await Promise.all([
+      this.prisma.product.findMany({
+        skip,
+        take: pageSize,
+        include: { variants: true },
+      }),
+      this.prisma.product.count(),
+    ]);
+    const totalPages = Math.ceil(totalItems / pageSize);
+
+    return {
+      items,
+      totalItems,
+      totalPages,
+      hasNextPage: pageNumber < totalPages,
+    };
   }
 
   async findOne(id: string) {
@@ -60,13 +72,13 @@ export class ProductService {
       include: { variants: true },
     });
   }
-  async deleteOne(id:string){
+  async deleteOne(id: string) {
     try {
       const deletedProduct = await this.prisma.product.delete({
         where: { id }, // the unique identifier for the product
       });
-      
-      return deletedProduct; 
+
+      return deletedProduct;
     } catch (error) {
       throw new Error(`Error deleting product with id ${id}: ${error.message}`);
     }

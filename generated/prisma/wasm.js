@@ -127,8 +127,27 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   phone: 'phone',
   password: 'password',
+  profileImage: 'profileImage',
+  dateOfBirth: 'dateOfBirth',
+  gender: 'gender',
   otp: 'otp',
   otpExpiresAt: 'otpExpiresAt'
+};
+
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fullName: 'fullName',
+  phone: 'phone',
+  pincode: 'pincode',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  street: 'street',
+  landmark: 'landmark',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserTokenScalarFieldEnum = {
@@ -235,6 +254,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Address: 'Address',
   UserToken: 'UserToken',
   ContactUs: 'ContactUs',
   HomePageContent: 'HomePageContent',

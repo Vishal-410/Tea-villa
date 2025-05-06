@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { UpdateCartInput } from './dto/update-cart.input';
+
 
 @Injectable()
 export class CartService {
@@ -48,14 +48,26 @@ export class CartService {
       });
     }
 
-    // Return the updated cart with item details
-    let data = await this.prisma.variant.findUnique({
-      where: { id: variantId },
-    });
-    console.log(data);
-    return this.getCart(userId);
-  }
+    const totalPrice = await this.calculateTotalPrice(cart.id);
 
+  let cartDetail=  this.getCart(userId);
+    return {cartDetail,totalPrice}
+  }
+  async calculateTotalPrice(cartId: string): Promise<number> {
+    const cartItems = await this.prisma.cartItem.findMany({
+      where: { cartId },
+      include: { variant: true },  // Include variant to get the price
+    });
+
+    let totalPrice = 0;
+
+    for (const item of cartItems) {
+      const itemPrice = item.variant.price;  
+      totalPrice += itemPrice * item.quantity; 
+    }
+
+    return totalPrice;
+  }
   // Retrieves the user's cart with item and variant details
   async getCart(userId: string) {
     return this.prisma.cart.findUnique({

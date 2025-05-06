@@ -15,6 +15,7 @@ import { CartModule } from './cart/cart.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { BlogModule } from './blog/blog.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { WishlistModule } from './wishlist/wishlist.module';
     CartModule,
     BlogModule,
     WishlistModule,
+    CheckoutModule,
   ],
   providers: [ PrismaService],
 })

@@ -33,7 +33,7 @@ export class Product {
   qualities: string[];
 
   @Field()
-  caffeine: boolean;
+  caffeine: string;
 
   @Field(() => [String]) // You might want to use this for allergens too
   allegens: string[];

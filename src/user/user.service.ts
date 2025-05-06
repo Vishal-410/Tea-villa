@@ -3,66 +3,116 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { UpdateUserInput } from './dto/update-user.input';
+import {
+  UpdateUserInput,
+  UpdateUserAddressInput,
+} from './dto/update-user.input';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserInput } from './dto/create-user.input';
-import { isEmail, isPhoneNumber } from 'src/utils/validateString';
 import * as bcrypt from 'bcrypt';
 import { User as PrismaUser } from 'generated/prisma';
 import * as nodemailer from 'nodemailer';
+import { Address } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserInput: CreateUserInput) {
-    // Validate if the provided input is either a valid email or a valid phone number
+    const {
+      firstName,
+      lastName,
+      phone,
+      email,
+      password,
+      profileImage,
+      dateOfBirth,
+      gender,
+      addresses,
+    } = createUserInput;
 
-    let hashedPassword: string;
-    if (createUserInput.password) {
-      const saltOrRounds = 10;
-      hashedPassword = await bcrypt.hash(
-        createUserInput.password,
-        saltOrRounds,
-      );
-    } else {
+    if (!password) {
       throw new BadRequestException('Password is compulsory');
     }
 
-    // Check if the user already exists with either the email or phone
-    // Check if the user already exists with either the email or phone
-const existingUser = await this.prisma.user.findFirst({
-  where: {
-    OR: [
-      { email: createUserInput.email },
-      { phone: String(createUserInput.phone) },
-    ],
-  },
-});
-
-if (existingUser) {
-  throw new BadRequestException('User already exists');
-}
-
-
-    // Make sure to validate name and password if needed
-
-    const userData = {
-      firstName: createUserInput.firstName,
-      lastName: createUserInput.lastName,
-      phone: String(createUserInput.phone), // Handle null phone if not provided
-      email: createUserInput.email, // Handle null email if not provided
-      password: hashedPassword,
-    };
-
-    // Proceed to create the user only after validation
-    const newUser = await this.prisma.user.create({
-      data: userData,
+    const existingUser = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { phone }],
+      },
     });
 
-    // Return the created user object
+    if (existingUser) {
+      throw new BadRequestException('Please enter unique email and phone');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Ensure only one default address is set
+    let defaultSet = false;
+    const cleanedAddresses =
+      addresses?.map((address) => {
+        if (address.isDefault && !defaultSet) {
+          defaultSet = true;
+          return { ...address, isDefault: true };
+        }
+        return { ...address, isDefault: false };
+      }) || [];
+
+    const newUser = await this.prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        password: hashedPassword,
+        profileImage,
+        dateOfBirth,
+        gender,
+        addresses:
+          cleanedAddresses.length > 0
+            ? {
+                create: cleanedAddresses,
+              }
+            : undefined,
+      },
+      include: {
+        addresses: true,
+      },
+    });
+
     return newUser;
+  }
+
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string,
+    confirmNewPassword: string,
+  ) {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!existingUser) {
+      throw new Error('User Not found');
+    }
+    const existingUserPassword = existingUser.password;
+    const isValidatePassword = await bcrypt.compare(
+      oldPassword,
+      existingUserPassword,
+    );
+    console.log(existingUserPassword, oldPassword);
+    if (isValidatePassword && newPassword === confirmNewPassword) {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+      });
+    } else {
+      throw new UnauthorizedException('credential not matched');
+    }
+    return existingUser;
   }
 
   async forgetUserPassword(email: string) {
@@ -109,20 +159,84 @@ if (existingUser) {
   }
 
   async findOne(userId: string): Promise<PrismaUser | null> {
+    /* this is used by jwtStrategy */
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  }
+  async getProfile(userId: string): Promise<PrismaUser | null> {
     return this.prisma.user.findUnique({
       where: { id: userId },
     });
   }
 
-  // update(updateUserInput: UpdateUserInput) {
-  //   const { id, ...data } = updateUserInput;
-  //   return this.prisma.user.update({
-  //     where: { id },
-  //     data,
-  //   });
-  // }
+  async updateProfile(userId: string, updateUserInput: UpdateUserInput) {
+    // Optionally validate user exists before update
+    const existingUser = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
 
-  // remove(id: number) {
-  //   return this.prisma.user.delete({ where: { id } });
-  // }
+    if (!existingUser) {
+      throw new NotFoundException('User not found');
+    }
+
+    const { id, addresses, ...data } = updateUserInput;
+
+    return this.prisma.user.update({
+      where: { id: userId },
+      data,
+    });
+  }
+
+  async updateAddress(
+    userId: string,
+    updateUserAddressInput: UpdateUserAddressInput,
+  ) {
+    const { id, isDefault, ...updateData } = updateUserAddressInput;
+
+    // Find the address by ID and userId
+    const existingAddress = await this.prisma.address.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!existingAddress) {
+      throw new NotFoundException('Address not found for this user');
+    }
+
+    if (isDefault === true) {
+      await this.prisma.address.updateMany({
+        where: {
+          userId,
+          NOT: { id },
+        },
+        data: { isDefault: false },
+      });
+    }
+
+    // Update the selected address
+    const updatedAddress = await this.prisma.address.update({
+      where: { id },
+      data: {
+        ...updateData,
+        isDefault: isDefault ?? existingAddress.isDefault,
+      },
+    });
+
+    return updatedAddress;
+  }
+  async removeUser(userId: string) {
+    const user = await this.prisma.user.delete({
+      where: { id: userId },
+    });
+    return user;
+  }
+  async deleteAddress(addressId: string) {
+    const address = await this.prisma.address.delete({
+      where: { id: addressId },
+    });
+    return address;
+  }
 }

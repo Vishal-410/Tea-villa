@@ -1,15 +1,14 @@
 // src/user/entities/user.entity.ts
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class User {
-  
   @Field()
   id: string;
 
   @Field()
   firstName: string;
-  
+
   @Field()
   lastName: string;
 
@@ -20,5 +19,51 @@ export class User {
   phone: string;
 
   @Field()
-  password:string;
+  password: string;
+
+  @Field({ nullable: true })
+  profileImage?: string;
+
+  @Field({ nullable: true })
+  dateOfBirth?: string;
+
+  @Field({ nullable: true })
+  gender?: string;
+
+  @Field(() => [Address], { nullable: true })
+  addresses?: Address[];
+}
+
+
+@ObjectType()
+export class Address {
+  @Field()
+  id: string;
+
+  @Field()
+  fullName: string;
+
+  @Field()
+  phone: string;
+
+  @Field()
+  pincode: string;
+
+  @Field()
+  city: string;
+
+  @Field()
+  state: string;
+
+  @Field()
+  country: string;
+
+  @Field()
+  street: string;
+
+  @Field({ nullable: true })
+  landmark?: string;
+
+  @Field()
+  isDefault: boolean;
 }
