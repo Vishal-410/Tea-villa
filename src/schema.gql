@@ -13,6 +13,7 @@ type User {
   dateOfBirth: String
   gender: String
   addresses: [Address!]
+  role: String
 }
 
 type Address {
@@ -151,6 +152,28 @@ type Checkout {
   exampleField: Int!
 }
 
+type Coupoun {
+  id: String!
+  code: String!
+  discount: Int!
+  type: String!
+  minimumAmount: Float
+  size: String
+  appliesToAll: Boolean!
+  expiresAt: DateTime!
+  isActive: Boolean!
+  createdAt: DateTime!
+  products: [Product!]
+  variants: [Variant!]
+}
+
+type ApplyCouponResponse {
+  valid: Boolean!
+  message: String!
+  discountAmount: Float
+  finalAmount: Float
+}
+
 type Query {
   getProfile: User!
   logoutUser: Boolean!
@@ -170,6 +193,8 @@ type Mutation {
   changePassword(oldPassword: String!, newPassword: String!, confirmNewPassword: String!): User!
   updateProfile: User!
   updateAddress(updateUserAddressInput: UpdateUserAddressInput!): User!
+  addAddress(updateUserAddressInput: CreateUserAddressInput!): User!
+  makeDefaultAddress(addressFieldId: String!): User!
   removeUser: User!
   deleteAddress(addressId: String!): User!
   login(loginInput: LoginInput!): JwtAuthResponse!
@@ -190,6 +215,8 @@ type Mutation {
   createCheckout(createCheckoutInput: CreateCheckoutInput!): Checkout!
   updateCheckout(updateCheckoutInput: UpdateCheckoutInput!): Checkout!
   removeCheckout(id: Int!): Checkout!
+  createCoupon(input: CreateCouponInput!): Coupoun!
+  applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
 }
 
 input CreateUserInput {
@@ -313,4 +340,23 @@ input UpdateCheckoutInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+}
+
+input CreateCouponInput {
+  code: String!
+  discount: Int!
+  type: String!
+  minimumAmount: Float
+  size: String
+  appliesToAll: Boolean! = false
+  expiresAt: DateTime!
+  productIds: [String!]
+  variantIds: [String!]
+}
+
+input ApplyCouponInput {
+  couponCode: String!
+  cartTotal: Float!
+  productIds: [String!]
+  variantIds: [String!]
 }

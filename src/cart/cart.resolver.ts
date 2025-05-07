@@ -15,7 +15,7 @@ export class CartResolver {
     const userId=context.req.user.id;
     return this.cartService.addToCart(userId, createCartInput.variantId, createCartInput.quantity);
   }
-
+  
   @Query(() => Cart, { name: 'cart' })
   findOne(@Args('id') id: string) {
     return this.cartService.getCart(id);

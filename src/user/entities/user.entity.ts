@@ -32,7 +32,12 @@ export class User {
 
   @Field(() => [Address], { nullable: true })
   addresses?: Address[];
+
+  
+  @Field({ nullable: true })
+  role?: string; 
 }
+
 
 
 @ObjectType()

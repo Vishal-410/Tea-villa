@@ -3,11 +3,17 @@ import { ProductService } from './product.service';
 import { CreateProductInput } from './dto/create-product.input';
 import { Product } from './entities/product.entity';
 import { ProductPaginationResponse } from './entities/product-pagination.response';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { UseGuards } from '@nestjs/common';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Resolver(() => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles("ADMIN")
   @Mutation(() => Product)
   createProduct(
     @Args('createProductInput') createProductInput: CreateProductInput,
@@ -27,6 +33,8 @@ export class ProductResolver {
   findOne(@Args('id') id: string) {
     return this.productService.findOne(id);
   }
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles("ADMIN")
   @Mutation(() => Product, { name: 'product' })
   deleteOne(@Args('id') id: string) {
     return this.productService.deleteOne(id);

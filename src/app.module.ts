@@ -16,6 +16,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { BlogModule } from './blog/blog.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { CheckoutModule } from './checkout/checkout.module';
+import { CoupounModule } from './coupoun/coupoun.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CheckoutModule } from './checkout/checkout.module';
     BlogModule,
     WishlistModule,
     CheckoutModule,
+    CoupounModule,
   ],
   providers: [ PrismaService],
 })

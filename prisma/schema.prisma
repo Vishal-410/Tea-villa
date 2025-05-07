@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id           String      @id @default(uuid())
   email        String      @unique
@@ -16,7 +21,7 @@ model User {
   phone        String      @unique
   password     String
   profileImage String?
-  addresses      Address[]
+  addresses    Address[]
   dateOfBirth  String?
   gender       String?
   otp          String?
@@ -24,24 +29,26 @@ model User {
   token        UserToken[]
   cart         Cart?
   wishlists    WishList[]
-}
-model Address {
-  id          String   @id @default(uuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  fullName    String
-  phone       String
-  pincode     String
-  city        String
-  state       String
-  country     String
-  street      String
-  landmark    String?
-  isDefault   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  role         Role        @default(USER)
+  coupounUsage CouponUsage[]
 }
 
+model Address {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  fullName  String
+  phone     String
+  pincode   String
+  city      String
+  state     String
+  country   String
+  street    String
+  landmark  String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model UserToken {
   id        String   @id @default(uuid())
@@ -117,6 +124,7 @@ model Product {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   wishlists  WishList[]
+  coupons    Coupon[]   @relation("CouponProducts")
 }
 
 model Variant {
@@ -126,12 +134,47 @@ model Variant {
   product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   CartItem  CartItem[]
+  coupons   Coupon[]   @relation("CouponVariants")
+}
+
+enum DiscountType {
+  percentage
+  fixed
+}
+
+model Coupon {
+  id            String       @id @default(uuid())
+  code          String       @unique
+  discount      Int // value: e.g., 10 means 10% or ₹10
+  type          DiscountType
+  minimumAmount Float? // optional: cart total must be >= this
+  appliesToAll  Boolean      @default(false) // true => valid for all products
+  size          String? // optional: only valid on this size
+  expiresAt     DateTime
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+
+  // Relations  
+  products Product[] @relation("CouponProducts")
+  variants Variant[] @relation("CouponVariants")
+  coupounUsage CouponUsage[]
+}
+model CouponUsage {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  couponId   String
+  coupon     Coupon   @relation(fields: [couponId], references: [id])
+  cartAmount Float
+  discount   Float
+  finalAmount Float
+  createdAt  DateTime @default(now())
 }
 
 model Cart {
   id        String     @id @default(uuid())
-  userId    String     @unique
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?     @unique
+  user      User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   items     CartItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

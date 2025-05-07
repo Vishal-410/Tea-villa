@@ -131,7 +131,8 @@ exports.Prisma.UserScalarFieldEnum = {
   dateOfBirth: 'dateOfBirth',
   gender: 'gender',
   otp: 'otp',
-  otpExpiresAt: 'otpExpiresAt'
+  otpExpiresAt: 'otpExpiresAt',
+  role: 'role'
 };
 
 exports.Prisma.AddressScalarFieldEnum = {
@@ -222,6 +223,29 @@ exports.Prisma.VariantScalarFieldEnum = {
   productId: 'productId'
 };
 
+exports.Prisma.CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  discount: 'discount',
+  type: 'type',
+  minimumAmount: 'minimumAmount',
+  appliesToAll: 'appliesToAll',
+  size: 'size',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CouponUsageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  couponId: 'couponId',
+  cartAmount: 'cartAmount',
+  discount: 'discount',
+  finalAmount: 'finalAmount',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -250,7 +274,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
 
+exports.DiscountType = exports.$Enums.DiscountType = {
+  percentage: 'percentage',
+  fixed: 'fixed'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -264,6 +296,8 @@ exports.Prisma.ModelName = {
   WishList: 'WishList',
   Product: 'Product',
   Variant: 'Variant',
+  Coupon: 'Coupon',
+  CouponUsage: 'CouponUsage',
   Cart: 'Cart',
   CartItem: 'CartItem'
 };

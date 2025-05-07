@@ -91,7 +91,7 @@ export class AuthService {
       },
     });
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email,role:user.role };
     const token = this.jwtService.sign(payload);
 
     // Save the token (after removing old)
@@ -140,7 +140,7 @@ export class AuthService {
       });
     }
 
-    const jwtPayload = { sub: user.id, email: user.email };
+    const jwtPayload = { sub: user.id, email: user.email ,role:user.role};
     const token = this.jwtService.sign(jwtPayload);
 
     await this.prisma.userToken.deleteMany({ where: { userId: user.id } });

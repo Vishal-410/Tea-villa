@@ -1,13 +1,15 @@
 // src/user/user.resolver.ts
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { CreateUserInput } from './dto/create-user.input';
+import { CreateUserAddressInput, CreateUserInput } from './dto/create-user.input';
 import { UpdateUserAddressInput, UpdateUserInput } from './dto/update-user.input';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Req, UseGuards } from '@nestjs/common';
-import { User as PrismaUser } from 'generated/prisma';
+import { User as PrismaUser, Role } from 'generated/prisma';
 import { User } from './entities/user.entity';
 import { PrismaService } from 'src/prisma.service';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -55,6 +57,19 @@ export class UserResolver {
     return this.userService.updateAddress(userId,updateUserAddressInput)
 
   }
+  @Mutation(()=>User)
+  @UseGuards(JwtAuthGuard)
+  addAddress(@Context() context,@Args('updateUserAddressInput') createUserAddressInput:CreateUserAddressInput){
+    const userId:string=context.req.user.id
+    return this.userService.addAddress(userId,createUserAddressInput)
+  }
+  @Mutation(()=>User)
+  @UseGuards(JwtAuthGuard)
+  makeDefaultAddress(@Context() context,@Args('addressFieldId') addressFieldId:string){
+    const userId:string=context.req.user.id
+    return this.userService.makeDefaultAddress(userId,addressFieldId)
+  }
+
   @Mutation(()=>User)
   @UseGuards(JwtAuthGuard)
   removeUser(@Context() context){

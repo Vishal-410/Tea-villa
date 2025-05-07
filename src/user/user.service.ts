@@ -10,7 +10,7 @@ import {
   UpdateUserAddressInput,
 } from './dto/update-user.input';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserInput } from './dto/create-user.input';
+import { CreateUserAddressInput, CreateUserInput } from './dto/create-user.input';
 import * as bcrypt from 'bcrypt';
 import { User as PrismaUser } from 'generated/prisma';
 import * as nodemailer from 'nodemailer';
@@ -189,16 +189,15 @@ export class UserService {
   }
 
   async updateAddress(
-    userId: string,
+    userId:string,
     updateUserAddressInput: UpdateUserAddressInput,
   ) {
     const { id, isDefault, ...updateData } = updateUserAddressInput;
 
     // Find the address by ID and userId
-    const existingAddress = await this.prisma.address.findFirst({
+    const existingAddress = await this.prisma.address.findUnique({
       where: {
         id,
-        userId,
       },
     });
 
@@ -227,6 +226,67 @@ export class UserService {
 
     return updatedAddress;
   }
+
+  async addAddress(userId: string, addressData:CreateUserAddressInput) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+  
+    if (addressData.isDefault) {
+      await this.prisma.address.updateMany({
+        where: { userId },
+        data: { isDefault: false },
+      });
+    }
+  
+    const newAddress = await this.prisma.address.create({
+      data: {
+        ...addressData,
+        user: { connect: { id: userId } },
+      },
+    });
+  
+    return newAddress
+  }
+
+  async makeDefaultAddress(userId: string, addressFieldId: string) {
+    // Check if address exists and belongs to the user
+    const address = await this.prisma.address.findFirst({
+      where: {
+        id: addressFieldId,
+        userId: userId,
+      },
+    });
+  
+    if (!address) {
+      throw new NotFoundException('Address not found for this user');
+    }
+  
+    // Set all other addresses to isDefault: false
+    await this.prisma.address.updateMany({
+      where: {
+        userId,
+        NOT: { id: addressFieldId },
+      },
+      data: {
+        isDefault: false,
+      },
+    });
+  
+    // Set the selected address to isDefault: true
+    const updatedAddress = await this.prisma.address.update({
+      where: { id: addressFieldId },
+      data: { isDefault: true },
+    });
+  
+    return updatedAddress;
+  }
+  
+
   async removeUser(userId: string) {
     const user = await this.prisma.user.delete({
       where: { id: userId },
