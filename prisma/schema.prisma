@@ -188,3 +188,15 @@ model CartItem {
   variantId String
   quantity  Int
 }
+model Payment {
+  id             String   @id @default(uuid())
+  razorpayOrderId String   @unique
+  amount         Int
+  currency       String
+  receipt        String
+  status         String   @default("created") // "created" | "paid" | "failed"
+  userId         String?  // Optional: If user is logged in
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+

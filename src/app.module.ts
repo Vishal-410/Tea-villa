@@ -17,6 +17,7 @@ import { BlogModule } from './blog/blog.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { CoupounModule } from './coupoun/coupoun.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CoupounModule } from './coupoun/coupoun.module';
     WishlistModule,
     CheckoutModule,
     CoupounModule,
+    PaymentModule,
   ],
   providers: [ PrismaService],
 })

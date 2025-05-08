@@ -1,4 +1,3 @@
-// schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -9,22 +8,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id           Int         @id @default(autoincrement())
-  email        String      @unique
+  id           String        @id @default(uuid())
+  email        String        @unique
   firstName    String
   lastName     String
-  phone        String      @unique // Changed to String to store phone numbers as text
+  phone        String        @unique
   password     String
+  profileImage String?
+  addresses    Address[]
+  dateOfBirth  String?
+  gender       String?
   otp          String?
   otpExpiresAt DateTime?
   token        UserToken[]
   cart         Cart?
+  wishlists    WishList[]
+  role         Role          @default(USER)
+  coupounUsage CouponUsage[]
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  fullName  String
+  phone     String
+  pincode   String
+  city      String
+  state     String
+  country   String
+  street    String
+  landmark  String?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model UserToken {
-  id        Int      @id @default(autoincrement())
-  userId    Int
+  id        String   @id @default(uuid())
+  userId    String
   token     String   @unique
   createdAt DateTime @default(now())
   expiresAt DateTime
@@ -32,15 +60,14 @@ model UserToken {
 }
 
 model ContactUs {
-  id      Int    @id @default(autoincrement())
-  name    String
+  id      String @id @default(uuid())
   phone   String
   email   String
   message String
 }
 
 model HomePageContent {
-  id         Int         @id @default(autoincrement())
+  id         String      @id @default(uuid())
   image      String
   heading    String
   paragraphs Paragraph[]
@@ -49,52 +76,128 @@ model HomePageContent {
 }
 
 model Paragraph {
-  id        Int             @id @default(autoincrement())
+  id        String          @id @default(uuid())
   text      String
   content   HomePageContent @relation(fields: [contentId], references: [id])
-  contentId Int
+  contentId String
+}
+
+model Blog {
+  id         String          @id @default(uuid())
+  heading    String
+  image      String
+  paragraphs BlogParagraph[]
+}
+
+model BlogParagraph {
+  id     String @id @default(uuid())
+  text   String
+  blogId String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
+}
+
+model WishList {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id         Int       @id @default(autoincrement())
+  id         String     @id @default(uuid())
   image      String
   name       String
   collection String
   flavour    String
   origin     String
   qualities  String[]
-  caffeine   Boolean
+  caffeine   String
   allegens   String[]
   isOrganic  Boolean
   isVegan    Boolean
-  variants   Variant[] // One-to-many relation
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  variants   Variant[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  wishlists  WishList[]
+  coupons    Coupon[]   @relation("CouponProducts")
 }
 
 model Variant {
-  id        Int        @id @default(autoincrement())
-  size      String // e.g., "50g", "100g"
+  id        String     @id @default(uuid())
+  size      String
   price     Float
   product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  productId String
   CartItem  CartItem[]
+  coupons   Coupon[]   @relation("CouponVariants")
+}
+
+enum DiscountType {
+  percentage
+  fixed
+}
+
+model Coupon {
+  id            String       @id @default(uuid())
+  code          String       @unique
+  discount      Int // value: e.g., 10 means 10% or ₹10
+  type          DiscountType
+  minimumAmount Float? // optional: cart total must be >= this
+  appliesToAll  Boolean      @default(false) // true => valid for all products
+  size          String? // optional: only valid on this size
+  expiresAt     DateTime
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+
+  // Relations
+  products     Product[]     @relation("CouponProducts")
+  variants     Variant[]     @relation("CouponVariants")
+  coupounUsage CouponUsage[]
+}
+
+model CouponUsage {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  couponId    String
+  coupon      Coupon   @relation(fields: [couponId], references: [id])
+  cartAmount  Float
+  discount    Float
+  finalAmount Float
+  createdAt   DateTime @default(now())
 }
 
 model Cart {
-  id        Int        @id @default(autoincrement())
-  userId    Int        @unique
-  user      User       @relation(fields: [userId], references: [id])
+  id        String     @id @default(uuid())
+  userId    String?    @unique
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   items     CartItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
 
 model CartItem {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(uuid())
   cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  cartId    Int
+  cartId    String
   variant   Variant @relation(fields: [variantId], references: [id])
-  variantId Int
+  variantId String
   quantity  Int
+}
+
+model Payment {
+  id              String   @id @default(uuid())
+  razorpayOrderId String   @unique
+  amount          Int
+  currency        String
+  receipt         String
+  status          String   @default("created") // "created" | "paid" | "failed"
+  userId          String? // Optional: If user is logged in
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

@@ -217,6 +217,7 @@ type Mutation {
   removeCheckout(id: Int!): Checkout!
   createCoupon(input: CreateCouponInput!): Coupoun!
   applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
+  createOrder(input: CreateOrderInput!): String!
 }
 
 input CreateUserInput {
@@ -360,4 +361,9 @@ input ApplyCouponInput {
   cartTotal: Float!
   productIds: [String!]
   variantIds: [String!]
+}
+
+input CreateOrderInput {
+  amount: Int!
+  currency: String! = "INR"
 }

@@ -260,6 +260,18 @@ exports.Prisma.CartItemScalarFieldEnum = {
   quantity: 'quantity'
 };
 
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  razorpayOrderId: 'razorpayOrderId',
+  amount: 'amount',
+  currency: 'currency',
+  receipt: 'receipt',
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -299,7 +311,8 @@ exports.Prisma.ModelName = {
   Coupon: 'Coupon',
   CouponUsage: 'CouponUsage',
   Cart: 'Cart',
-  CartItem: 'CartItem'
+  CartItem: 'CartItem',
+  Payment: 'Payment'
 };
 
 /**
