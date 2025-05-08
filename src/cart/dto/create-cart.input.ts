@@ -3,7 +3,12 @@ import { IsInt, Min } from 'class-validator';
 
 @InputType()
 export class CreateCartInput {
-  @Field()
+ 
+
+  @Field(() => String, { nullable:true })
+  cartId?: string;
+
+  @Field(()=>String)
   variantId: string;
 
   @Field(() => Int)

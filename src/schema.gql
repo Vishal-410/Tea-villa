@@ -105,9 +105,7 @@ type ProductPaginationResponse {
 type Cart {
   """Unique identifier for the cart"""
   id: String!
-
-  """ID of the user who owns the cart"""
-  userId: Int!
+  userId: Int
 
   """List of items in the cart"""
   items: [CartItem!]!
@@ -124,7 +122,7 @@ type CartItem {
   id: String!
 
   """ID of the variant being added to the cart"""
-  variantId: Int!
+  variantId: String!
 
   """Quantity of the product variant"""
   quantity: Int!
@@ -181,7 +179,8 @@ type Query {
   home(id: String!): Home!
   products(pageNumber: Float!, pageSize: Float! = 5): ProductPaginationResponse!
   product(id: String!): Product!
-  cart(id: String!): Cart!
+  cartByUser(userId: String!): Cart!
+  cartById(cartId: String!): Cart!
   blog(id: String!): Blog!
   wishlist: [Wishlist!]!
   checkout(id: Int!): Checkout!
@@ -205,7 +204,8 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   product(id: String!): Product!
   createCart(createCartInput: CreateCartInput!): Cart!
-  removeItem(userId: String!, variantId: String!): Cart!
+  mergeCart(guestCartId: String!): Boolean!
+  removeItem(cartId: String!, variantId: String!): Cart!
   createBlog(createBlogInput: CreateBlogInput!): Blog!
   updateBlog(updateBlogInput: UpdateBlogInput!): Blog!
   removeBlog(id: String!): Blog!
@@ -310,6 +310,7 @@ input CreateVariantInput {
 }
 
 input CreateCartInput {
+  cartId: String
   variantId: String!
   quantity: Int!
 }

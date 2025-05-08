@@ -154,7 +154,7 @@ model Coupon {
   isActive      Boolean      @default(true)
   createdAt     DateTime     @default(now())
 
-  // Relations  
+  // Relations
   products Product[] @relation("CouponProducts")
   variants Variant[] @relation("CouponVariants")
   coupounUsage CouponUsage[]

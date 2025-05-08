@@ -5,8 +5,8 @@ export class Cart {
   @Field( { description: 'Unique identifier for the cart' })
   id: string;
 
-  @Field(() => Int, { description: 'ID of the user who owns the cart' })
-  userId: number;
+  @Field(() => Int, { nullable:true })
+  userId?: number;
 
   @Field(() => [CartItem], { description: 'List of items in the cart' })
   items: CartItem[];
@@ -23,8 +23,8 @@ export class CartItem {
   @Field( { description: 'Unique identifier for the cart item' })
   id: string;
 
-  @Field(() => Int, { description: 'ID of the variant being added to the cart' })
-  variantId: number;
+  @Field(() => String, { description: 'ID of the variant being added to the cart' })
+  variantId: string;
 
   @Field(() => Int, { description: 'Quantity of the product variant' })
   quantity: number;
