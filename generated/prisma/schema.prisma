@@ -31,6 +31,8 @@ model User {
   wishlists    WishList[]
   role         Role          @default(USER)
   coupounUsage CouponUsage[]
+  ratings      Rating[]
+  order        Order[]
 }
 
 model Address {
@@ -125,16 +127,18 @@ model Product {
   updatedAt  DateTime   @updatedAt
   wishlists  WishList[]
   coupons    Coupon[]   @relation("CouponProducts")
+  ratings    Rating[]
 }
 
 model Variant {
-  id        String     @id @default(uuid())
+  id        String      @id @default(uuid())
   size      String
   price     Float
-  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   CartItem  CartItem[]
-  coupons   Coupon[]   @relation("CouponVariants")
+  coupons   Coupon[]    @relation("CouponVariants")
+  orderItem OrderItem[]
 }
 
 enum DiscountType {
@@ -191,13 +195,52 @@ model CartItem {
 }
 
 model Payment {
-  id              String   @id @default(uuid())
-  razorpayOrderId String   @unique
-  amount          Int
-  currency        String
-  receipt         String
-  status          String   @default("created") // "created" | "paid" | "failed"
-  userId          String? // Optional: If user is logged in
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(cuid())
+  razorpayOrderId   String   @unique
+  razorpayPaymentId String?
+  amount            Float
+  currency          String
+  receipt           String
+  status            String
+  userId            String? // Optional, if payment is linked to a user
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  rating    Int // e.g., 1 to 5
+  review    String? // Optional user feedback
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  total     Float
+  status    String // pending, paid, shipped, delivered, etc.
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  paymentId String      @unique
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  quantity  Int
+  orderId   String
+  variantId String
+  variant   Variant  @relation(fields: [variantId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

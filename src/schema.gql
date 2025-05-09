@@ -145,11 +145,6 @@ type Wishlist {
   id: String!
 }
 
-type Checkout {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Coupoun {
   id: String!
   code: String!
@@ -172,6 +167,16 @@ type ApplyCouponResponse {
   finalAmount: Float
 }
 
+type Rating {
+  id: String!
+  rating: Float!
+  review: String
+  userId: String!
+  productId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   getProfile: User!
   logoutUser: Boolean!
@@ -183,7 +188,6 @@ type Query {
   cartById(cartId: String!): Cart!
   blog(id: String!): Blog!
   wishlist: [Wishlist!]!
-  checkout(id: Int!): Checkout!
 }
 
 type Mutation {
@@ -212,12 +216,11 @@ type Mutation {
   createWishlist(productId: String!): Wishlist!
   deleteAll: Boolean!
   removeWishlist(id: String!): Wishlist!
-  createCheckout(createCheckoutInput: CreateCheckoutInput!): Checkout!
-  updateCheckout(updateCheckoutInput: UpdateCheckoutInput!): Checkout!
-  removeCheckout(id: Int!): Checkout!
   createCoupon(input: CreateCouponInput!): Coupoun!
   applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
   createOrder(input: CreateOrderInput!): String!
+  createUpdateRating(createRatingInput: CreateRatingInput!): Rating!
+  deleteRating(productId: String!): Rating!
 }
 
 input CreateUserInput {
@@ -333,17 +336,6 @@ input UpdateBlogInput {
   id: String!
 }
 
-input CreateCheckoutInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateCheckoutInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
 input CreateCouponInput {
   code: String!
   discount: Int!
@@ -366,4 +358,10 @@ input ApplyCouponInput {
 input CreateOrderInput {
   amount: Int!
   currency: String! = "INR"
+}
+
+input CreateRatingInput {
+  productId: String!
+  rating: Float!
+  review: String
 }

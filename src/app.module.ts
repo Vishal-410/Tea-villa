@@ -1,6 +1,5 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module} from '@nestjs/common';
+
 import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
@@ -12,13 +11,11 @@ import { HomeModule } from './home/home.module';
 import { UploadModule } from './upload/upload.module';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { BlogModule } from './blog/blog.module';
 import { WishlistModule } from './wishlist/wishlist.module';
-import { CheckoutModule } from './checkout/checkout.module';
 import { CoupounModule } from './coupoun/coupoun.module';
 import { PaymentModule } from './payment/payment.module';
-
+import { RatingModule } from './rating/rating.module';
 @Module({
   imports: [
     // ServeStaticModule.forRoot({
@@ -40,9 +37,9 @@ import { PaymentModule } from './payment/payment.module';
     CartModule,
     BlogModule,
     WishlistModule,
-    CheckoutModule,
     CoupounModule,
     PaymentModule,
+    RatingModule,
   ],
   providers: [ PrismaService],
 })
