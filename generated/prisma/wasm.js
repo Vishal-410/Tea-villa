@@ -302,6 +302,14 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  prompt: 'prompt',
+  imageUrl: 'imageUrl',
+  response: 'response',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -345,7 +353,8 @@ exports.Prisma.ModelName = {
   Payment: 'Payment',
   Rating: 'Rating',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Chat: 'Chat'
 };
 
 /**

@@ -244,6 +244,7 @@ type Mutation {
   confirmOrder(razorpayOrderId: String!, razorpayPaymentId: String!, signature: String!): Order!
   createUpdateRating(createRatingInput: CreateRatingInput!): Rating!
   deleteRating(productId: String!): Rating!
+  getAnswerFromOpenRouter(query: String!, imageUrl: String): String!
 }
 
 input CreateUserInput {
