@@ -132,7 +132,7 @@ export class PaymentService {
     }
   }
 
-  async getOrdersByUserId(userId: string) {
+  async getOrdersByUserId(userId: string):Promise<Order[]> {
     return this.prisma.order.findMany({
       where: { userId },
       include: {

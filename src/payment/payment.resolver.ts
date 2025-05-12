@@ -32,10 +32,11 @@ export class PaymentResolver {
     return this.paymentService.confirmOrder(userId, razorpayOrderId, razorpayPaymentId, signature);
   }
   @UseGuards(JwtAuthGuard)
-  @Query()
-  async myOrders(@Context() context) {
+  @Query(() => [Order]) // ✅ specify return type
+  async myOrders(@Context() context): Promise<Order[]> {
     const userId: string = context.req.user.id;
     return this.paymentService.getOrdersByUserId(userId);
   }
+  
 
 }

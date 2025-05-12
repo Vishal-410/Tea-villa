@@ -167,6 +167,27 @@ type ApplyCouponResponse {
   finalAmount: Float
 }
 
+type Order {
+  id: String!
+  userId: String!
+  items: [OrderItem!]!
+  total: Float!
+  status: String!
+  paymentId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type OrderItem {
+  id: String!
+  orderId: String!
+  variant: Variant!
+  variantId: String!
+  quantity: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Rating {
   id: String!
   rating: Float!
@@ -188,6 +209,7 @@ type Query {
   cartById(cartId: String!): Cart!
   blog(id: String!): Blog!
   wishlist: [Wishlist!]!
+  myOrders: [Order!]!
 }
 
 type Mutation {
@@ -219,6 +241,7 @@ type Mutation {
   createCoupon(input: CreateCouponInput!): Coupoun!
   applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
   createOrder(input: CreateOrderInput!): String!
+  confirmOrder(razorpayOrderId: String!, razorpayPaymentId: String!, signature: String!): Order!
   createUpdateRating(createRatingInput: CreateRatingInput!): Rating!
   deleteRating(productId: String!): Rating!
 }
