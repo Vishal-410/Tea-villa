@@ -28,7 +28,8 @@ import { ChatModule } from './chat/chat.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ req }), // 👈 जरूरी है
       uploads: false,
-    }),
+      csrfPrevention: false,
+     }),
 
     UserModule,
     AuthModule,
