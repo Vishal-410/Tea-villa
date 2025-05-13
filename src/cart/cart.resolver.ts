@@ -63,7 +63,7 @@ export class CartResolver {
   }
 
   @Mutation(() => Cart)
-  async removeItem(
+  async removeItemFromCart(
     @Args('cartId') cartId: string,
     @Args('variantId') variantId: string,
   ) {

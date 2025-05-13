@@ -199,7 +199,7 @@ type Rating {
 }
 
 type Query {
-  getProfile: User!
+  getUserProfile: User!
   logoutUser: Boolean!
   homes: [Home!]!
   home(id: String!): Home!
@@ -215,29 +215,29 @@ type Query {
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   forgotUserPassword(email: String!): User!
-  changePassword(oldPassword: String!, newPassword: String!, confirmNewPassword: String!): User!
-  updateProfile: User!
-  updateAddress(updateUserAddressInput: UpdateUserAddressInput!): User!
-  addAddress(updateUserAddressInput: CreateUserAddressInput!): User!
+  changeUserPassword(oldPassword: String!, newPassword: String!, confirmNewPassword: String!): User!
+  updateUserProfile: User!
+  updateUserAddress(updateUserAddressInput: UpdateUserAddressInput!): User!
+  addUserAddress(updateUserAddressInput: CreateUserAddressInput!): User!
   makeDefaultAddress(addressFieldId: String!): User!
   removeUser: User!
-  deleteAddress(addressId: String!): User!
+  deleteUserAddress(addressId: String!): User!
   login(loginInput: LoginInput!): JwtAuthResponse!
   verifyOtp(email: String!, otp: String!): JwtAuthResponse!
   loginWithGoogle(idToken: String!): JwtAuthResponse!
-  createContactus(createContactusInput: CreateContactusInput!): Contactus!
-  createHome(createHomeInput: CreateHomeInput!): Home!
+  createContactUs(createContactusInput: CreateContactusInput!): Contactus!
+  createHomePage(createHomeInput: CreateHomeInput!): Home!
   createProduct(createProductInput: CreateProductInput!): Product!
   product(id: String!): Product!
   createCart(createCartInput: CreateCartInput!): Cart!
   mergeCart(guestCartId: String!): Boolean!
-  removeItem(cartId: String!, variantId: String!): Cart!
+  removeItemFromCart(cartId: String!, variantId: String!): Cart!
   createBlog(createBlogInput: CreateBlogInput!): Blog!
   updateBlog(updateBlogInput: UpdateBlogInput!): Blog!
   removeBlog(id: String!): Blog!
   createWishlist(productId: String!): Wishlist!
-  deleteAll: Boolean!
-  removeWishlist(id: String!): Wishlist!
+  deleteAllWishListItem: Boolean!
+  removeWishlistItytemById(id: String!): Wishlist!
   createCoupon(input: CreateCouponInput!): Coupoun!
   applyCoupon(input: ApplyCouponInput!): ApplyCouponResponse!
   createOrder(input: CreateOrderInput!): String!

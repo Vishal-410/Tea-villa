@@ -28,7 +28,7 @@ export class UserResolver {
   }
   @UseGuards(JwtAuthGuard)
   @Mutation(()=>User)
-  changePassword(@Context() context,
+  changeUserPassword(@Context() context,
   @Args('oldPassword') oldPassword:string,@Args('newPassword') newPassword:string,@Args('confirmNewPassword') confirmNewPassword:string
   ){
     const userId=context.req.user.id;
@@ -38,28 +38,28 @@ export class UserResolver {
 
   @UseGuards(JwtAuthGuard)
   @Query(()=>User)
-  getProfile(@Context() context){
+  getUserProfile(@Context() context){
     const userId:string=context.req.user.id
     return this.userService.getProfile(userId)
   }
 
   @Mutation(()=>User)
   @UseGuards(JwtAuthGuard)
-  updateProfile(@Context() context,updateUserInput:UpdateUserInput){
+  updateUserProfile(@Context() context,updateUserInput:UpdateUserInput){
     const userId:string=context.req.user.id
     return this.userService.updateProfile(userId,updateUserInput)
 
   }
   @Mutation(()=>User)
   @UseGuards(JwtAuthGuard)
-  updateAddress(@Context() context,@Args('updateUserAddressInput') updateUserAddressInput:UpdateUserAddressInput){
+  updateUserAddress(@Context() context,@Args('updateUserAddressInput') updateUserAddressInput:UpdateUserAddressInput){
     const userId:string=context.req.user.id
     return this.userService.updateAddress(userId,updateUserAddressInput)
 
   }
   @Mutation(()=>User)
   @UseGuards(JwtAuthGuard)
-  addAddress(@Context() context,@Args('updateUserAddressInput') createUserAddressInput:CreateUserAddressInput){
+  addUserAddress(@Context() context,@Args('updateUserAddressInput') createUserAddressInput:CreateUserAddressInput){
     const userId:string=context.req.user.id
     return this.userService.addAddress(userId,createUserAddressInput)
   }
@@ -79,7 +79,7 @@ export class UserResolver {
   }
   @Mutation(()=>User)
   @UseGuards(JwtAuthGuard)
-  deleteAddress(@Context() context,@Args('addressId' ) addressId:string
+  deleteUserAddress(@Context() context,@Args('addressId' ) addressId:string
   ){
     const userId:string=context.req.user.id
     return this.userService.deleteAddress(addressId)

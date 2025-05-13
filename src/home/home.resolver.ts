@@ -9,17 +9,17 @@ export class HomeResolver {
   constructor(private readonly homeService: HomeService) {}
 
   @Mutation(() => Home)
-  createHome(@Args('createHomeInput') createHomeInput: CreateHomeInput) {
+  createHomePage(@Args('createHomeInput') createHomeInput: CreateHomeInput) {
     return this.homeService.create(createHomeInput);
   }
 
   @Query(() => [Home], { name: 'homes' }) // Changed to 'homes' as it's a list
-  findAll() {
+  findAllHomePage() {
     return this.homeService.findAll();
   }
 
   @Query(() => Home, { name: 'home' })
-  findOne(@Args('id') id: string) { // ID should be string
+  findOneHomePage(@Args('id') id: string) { // ID should be string
     return this.homeService.findOne(id);
   }
 

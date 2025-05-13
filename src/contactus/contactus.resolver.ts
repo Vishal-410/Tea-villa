@@ -9,7 +9,7 @@ export class ContactusResolver {
   constructor(private readonly contactusService: ContactusService) {}
 
   @Mutation(() => Contactus)
-  createContactus(@Args('createContactusInput') createContactusInput: CreateContactusInput) {
+  createContactUs(@Args('createContactusInput') createContactusInput: CreateContactusInput) {
     return this.contactusService.create(createContactusInput);
   }
 

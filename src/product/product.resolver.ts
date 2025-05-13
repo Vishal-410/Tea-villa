@@ -22,7 +22,7 @@ export class ProductResolver {
   }
 
   @Query(() => ProductPaginationResponse, { name: 'products' })
-  findAll(
+  findAllProduct(
     @Args('pageNumber', { type: () => Float }) pageNumber: number,
     @Args('pageSize', { type: () => Float, defaultValue: 5 }) pageSize: number,
   ) {

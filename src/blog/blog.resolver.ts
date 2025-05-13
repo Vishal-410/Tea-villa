@@ -14,12 +14,12 @@ export class BlogResolver {
   }
 
   @Query(() => [Blog], { name: 'blog' })
-  findAll() {
+  findAllBlog() {
     return this.blogService.findAll();
   }
 
   @Query(() => Blog, { name: 'blog' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  findOneBlog(@Args('id', { type: () => String }) id: string) {
     return this.blogService.findOne(id);
   }
 

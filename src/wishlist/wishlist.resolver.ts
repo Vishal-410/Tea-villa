@@ -10,24 +10,21 @@ export class WishlistResolver {
 
   @Mutation(() => Wishlist)
   @UseGuards(JwtAuthGuard)
-  createWishlist(
-    @Context() context,
-    @Args('productId') productId: string,
-  ) {
+  createWishlist(@Context() context, @Args('productId') productId: string) {
     const userId = context.req.user.id;
     return this.wishlistService.create(userId, productId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Query(() => [Wishlist], { name: 'wishlist' })
-  findAll(@Context() context) {
+  findAllWishListItem(@Context() context) {
     const userId = context.req.user.id;
     return this.wishlistService.findAll(userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean) // Expecting a boolean indicating success/failure
-  async deleteAll(@Context() context) {
+  async deleteAllWishListItem(@Context() context) {
     const userId = context.req.user.id;
     const result = await this.wishlistService.deleteAll(userId);
     return result > 0; // Return true if some items were deleted
@@ -35,7 +32,7 @@ export class WishlistResolver {
 
   @Mutation(() => Wishlist)
   @UseGuards(JwtAuthGuard)
-  removeWishlist(@Args('id', { type: () => String }) id: string) {
+  removeWishlistItytemById(@Args('id', { type: () => String }) id: string) {
     return this.wishlistService.remove(id);
   }
 }
