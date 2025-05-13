@@ -371,11 +371,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:Vishal@410@localhost:5432/tea-villa?schema=public"
+        "value": null
       }
     }
   },
