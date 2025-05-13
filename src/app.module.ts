@@ -29,6 +29,8 @@ import { ChatModule } from './chat/chat.module';
       context: ({ req }) => ({ req }), // 👈 जरूरी है
       uploads: false,
       csrfPrevention: false,
+      playground: true, // ✅ enable playground
+      introspection: true, // ✅ required in production to view schema
      }),
 
     UserModule,
