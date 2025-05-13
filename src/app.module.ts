@@ -16,6 +16,8 @@ import { WishlistModule } from './wishlist/wishlist.module';
 import { CoupounModule } from './coupoun/coupoun.module';
 import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
+import { ChatModule } from './chat/chat.module';
+
 @Module({
   imports: [
     // ServeStaticModule.forRoot({
@@ -40,6 +42,7 @@ import { RatingModule } from './rating/rating.module';
     CoupounModule,
     PaymentModule,
     RatingModule,
+    ChatModule,
   ],
   providers: [ PrismaService],
 })
