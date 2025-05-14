@@ -7,19 +7,16 @@ export class ChatService {
   constructor(private readonly prisma: PrismaService) {}
 
   async chat(query: string, imageUrl?: string): Promise<string> {
-    // Convert image URL to Base64 if provided
-    let base64Image: string | undefined;
+    
+
+    let answer: string;
+
     if (imageUrl) {
-      base64Image = await this.imageUrlToBase64(imageUrl);
+      answer = await this.analyzeImageWithDeepInfra(imageUrl, query);
+    } else {
+      answer = await this.callDeepSeekAPI(query);
     }
 
-    const fullPrompt = base64Image
-      ? `Analyze this image: ${base64Image}\n\nQuestion: ${query}`
-      : query;
-
-    const answer = await this.callDeepSeekAPI(fullPrompt);
-
-    // Save chat record in the database
     await this.prisma.chat.create({
       data: {
         prompt: query,
@@ -29,6 +26,52 @@ export class ChatService {
     });
 
     return answer;
+  }
+
+  async analyzeImageWithDeepInfra(
+    imageUrl: string,
+    prompt: string,
+  ): Promise<string> {
+    try {
+      const response = await axios.post(
+        'https://api.deepinfra.com/v1/openai/chat/completions',
+        {
+          model: 'meta-llama/Llama-3.2-11B-Vision-Instruct',
+          messages: [
+            {
+              role: 'user',
+              content: [
+                { 
+                  type: 'text',
+                 text: prompt 
+                },
+                 { "type": "image_url",
+              "image_url": {
+                "url": imageUrl}}],
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer xpqensUkRBteCGQiad1jotaKOGRWd5lt`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      // Process the response and return the result
+      if (response.data && response.data.choices && response.data.choices[0]) {
+        return response.data.choices[0].message.content;
+      } else {
+        throw new Error('No valid response from Deep Infra');
+      }
+    } catch (error) {
+      console.error(
+        'Deep Infra API error:',
+        error?.response?.data || error.message,
+      );
+      throw new Error('Failed to analyze image with Deep Infra');
+    }
   }
 
   private async callDeepSeekAPI(query: string): Promise<string> {
@@ -52,10 +95,7 @@ export class ChatService {
         },
       );
 
-      // Log the full response to verify the structure
-      console.log('OpenRouter API Response:', response.data);
 
-      // Check if the response has 'choices' and the expected structure
       if (response.data && response.data.choices && response.data.choices[0]) {
         return response.data.choices[0].message.content;
       } else {
@@ -70,18 +110,5 @@ export class ChatService {
     }
   }
 
-  // Function to convert image URL to Base64
-  private async imageUrlToBase64(imageUrl: string): Promise<string> {
-    try {
-      const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
 
-      const base64 = Buffer.from(response.data, 'binary').toString('base64');
-      const contentType = response.headers['content-type']; // e.g., image/png
-
-      return `data:${contentType};base64,${base64}`;
-    } catch (error) {
-      console.error("Error in converting image URL to base64:", error);
-      throw new Error("Image conversion failed");
-    }
-  }
 }

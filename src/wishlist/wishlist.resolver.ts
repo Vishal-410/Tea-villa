@@ -23,7 +23,7 @@ export class WishlistResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => Boolean) // Expecting a boolean indicating success/failure
+  @Mutation(() => Boolean) 
   async deleteAllWishListItem(@Context() context) {
     const userId = context.req.user.id;
     const result = await this.wishlistService.deleteAll(userId);

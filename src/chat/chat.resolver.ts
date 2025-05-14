@@ -6,7 +6,7 @@ export class ChatResolver {
   constructor(private readonly chatService: ChatService) {}
 
   @Mutation(() => String)
-  getAnswerFromOpenRouter(
+  getAnswerFromChat(
     @Args('query') query: string,
     @Args('imageUrl', { nullable: true }) imageUrl?: string,
   ): Promise<string> {
