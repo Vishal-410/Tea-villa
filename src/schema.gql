@@ -18,8 +18,6 @@ type User {
 
 type Address {
   id: String!
-  fullName: String!
-  phone: String!
   pincode: String!
   city: String!
   state: String!
@@ -260,8 +258,6 @@ input CreateUserInput {
 }
 
 input CreateUserAddressInput {
-  fullName: String!
-  phone: String!
   pincode: String!
   city: String!
   state: String!
@@ -272,8 +268,6 @@ input CreateUserAddressInput {
 }
 
 input UpdateUserAddressInput {
-  fullName: String
-  phone: String
   pincode: String
   city: String
   state: String

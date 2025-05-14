@@ -46,12 +46,6 @@ export class Address {
   id: string;
 
   @Field()
-  fullName: string;
-
-  @Field()
-  phone: string;
-
-  @Field()
   pincode: string;
 
   @Field()

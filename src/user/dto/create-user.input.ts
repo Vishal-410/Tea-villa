@@ -2,12 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateUserAddressInput {
-  @Field()
-  fullName: string;
-
-  @Field()
-  phone: string;
-
+  
   @Field()
   pincode: string;
 
