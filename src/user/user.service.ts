@@ -10,14 +10,31 @@ import {
   UpdateUserAddressInput,
 } from './dto/update-user.input';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserAddressInput, CreateUserInput } from './dto/create-user.input';
+import {
+  CreateUserAddressInput,
+  CreateUserInput,
+} from './dto/create-user.input';
 import * as bcrypt from 'bcrypt';
 import { User as PrismaUser } from 'generated/prisma';
 import * as nodemailer from 'nodemailer';
-import { Address } from './entities/user.entity';
+import { Address, User, UserProfile } from './entities/user.entity';
+
+
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidPhone(phone: string): boolean {
+  
+  const phoneRegex = /^\+?\d{1,4}[- ]?\d{10}$/;
+  return phoneRegex.test(phone);
+}
+
 
 @Injectable()
 export class UserService {
+  
   constructor(private prisma: PrismaService) {}
 
   async create(createUserInput: CreateUserInput) {
@@ -36,6 +53,14 @@ export class UserService {
     if (!password) {
       throw new BadRequestException('Password is compulsory');
     }
+  
+    if (!isValidEmail(email)) {
+      throw new BadRequestException('Invalid email format');
+    }
+    if (!isValidPhone(phone)) {
+      throw new BadRequestException('Invalid phone number. Must be 10 digits with country code');
+    } new BadRequestException('Password is compulsory');
+    
 
     const existingUser = await this.prisma.user.findFirst({
       where: {
@@ -91,6 +116,9 @@ export class UserService {
     newPassword: string,
     confirmNewPassword: string,
   ) {
+    if (newPassword !== confirmNewPassword) {
+      throw new Error(' the new and confirmPassword note match');
+    }
     const existingUser = await this.prisma.user.findUnique({
       where: { id: userId },
     });
@@ -102,7 +130,18 @@ export class UserService {
       oldPassword,
       existingUserPassword,
     );
-    console.log(existingUserPassword, oldPassword);
+      if(!isValidatePassword){
+        throw new Error("please enter correct old password")
+      }
+    const isNewAndOldPasswordSame = await bcrypt.compare(
+      newPassword,
+      existingUserPassword,
+    );
+    if (isNewAndOldPasswordSame) {
+      throw new Error("the  old and new password can't be same");
+    }
+
+
     if (isValidatePassword && newPassword === confirmNewPassword) {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await this.prisma.user.update({
@@ -115,86 +154,106 @@ export class UserService {
     return existingUser;
   }
 
-  async forgetUserPassword(email: string) {
-    const existingUser = await this.prisma.user.findUnique({
-      where: { email },
-    });
+  async forgetUserPassword(email: string,phone:string) {
+    let existingUser: User | null = null;
+if (email) {
+  existingUser = await this.prisma.user.findUnique({
+    where: { email },
+    include:{addresses:true}
+  });
+} else if (phone) {
+  existingUser = await this.prisma.user.findUnique({
+    where: { phone },
+    include:{addresses:true}
 
-    if (!existingUser) {
-      throw new NotFoundException('User not found');
-    }
+  });
+} else {
+  throw new BadRequestException('Either email or phone must be provided');
+}
+if(existingUser === null){
+  throw new Error("User not register with this email and phone number" )
+}
+let userEmail=existingUser.email;
 
-    // Generate new password logic
+
+  
     const generateSixDigitPassword = () =>
       Math.floor(100000 + Math.random() * 900000).toString();
     let newPassword = generateSixDigitPassword();
 
-    // Hash the password (as you were doing previously)
+   
     let hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Save the new password
+ 
     await this.prisma.user.update({
-      where: { email },
+      where: { email:userEmail },
       data: { password: hashedPassword },
     });
 
-    // Set up the transporter for sending email
+   
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // You can change this to the email provider you're using
+      service: 'gmail', 
       auth: {
-        user: process.env.EMAIL_USER, // Email address
-        pass: process.env.EMAIL_PASSWORD, // Email password (be cautious with storing in env files)
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASSWORD, 
       },
     });
 
-    // Send the email with the new password
+   
     const mailOptions = {
-      from: process.env.EMAIL_USER, // sender address
-      to: email, // list of receivers
-      subject: 'Your New Password', // Subject line
-      text: `Your new password is: ${newPassword} you can Change your password After Login`, // plaintext body
+      from: process.env.EMAIL_USER, 
+      to: userEmail, 
+      subject: 'Your New Password', 
+      text: `Your new password is: ${newPassword} you can Change your password After Login`, 
     };
     transporter.sendMail(mailOptions);
     return existingUser;
   }
 
   async findOne(userId: string): Promise<PrismaUser | null> {
-    /* this is used by jwtStrategy */
     return this.prisma.user.findUnique({
       where: { id: userId },
     });
   }
-  async getProfile(userId: string): Promise<PrismaUser | null> {
-    return this.prisma.user.findUnique({
+  async getProfile(userId: string):Promise<UserProfile|null> {
+   const user=await  this.prisma.user.findUnique({
       where: { id: userId },
+      include:{addresses:true}
     });
+    if(!user){
+      return null;
+    }
+    const {password, ...userwithoutPAssword}=user
+    return userwithoutPAssword;
   }
+ 
 
-  async updateProfile(userId: string, updateUserInput: UpdateUserInput) {
-    // Optionally validate user exists before update
+  async updateProfile(userId: string, updateUserInput: UpdateUserInput):Promise<User|null> {
     const existingUser = await this.prisma.user.findUnique({
       where: { id: userId },
     });
-
+  
     if (!existingUser) {
       throw new NotFoundException('User not found');
     }
-
-    const { id, addresses, ...data } = updateUserInput;
-
+  
+    const {id, addresses, ...data } = updateUserInput;
+  
     return this.prisma.user.update({
       where: { id: userId },
       data,
+      include:{addresses:true}
     });
   }
+  
 
   async updateAddress(
-    userId:string,
+    userId: string,
     updateUserAddressInput: UpdateUserAddressInput,
-  ) {
+  ) :Promise<Address|null>{
     const { id, isDefault, ...updateData } = updateUserAddressInput;
 
-    // Find the address by ID and userId
+   
     const existingAddress = await this.prisma.address.findUnique({
       where: {
         id,
@@ -215,7 +274,7 @@ export class UserService {
       });
     }
 
-    // Update the selected address
+
     const updatedAddress = await this.prisma.address.update({
       where: { id },
       data: {
@@ -227,46 +286,46 @@ export class UserService {
     return updatedAddress;
   }
 
-  async addAddress(userId: string, addressData:CreateUserAddressInput) {
+  async addAddress(userId: string, addressData: CreateUserAddressInput):Promise<Address|null> {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
-  
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
-  
+
     if (addressData.isDefault) {
       await this.prisma.address.updateMany({
         where: { userId },
         data: { isDefault: false },
       });
     }
-  
+
     const newAddress = await this.prisma.address.create({
       data: {
         ...addressData,
         user: { connect: { id: userId } },
       },
     });
-  
-    return newAddress
+
+    return newAddress;
   }
 
-  async makeDefaultAddress(userId: string, addressFieldId: string) {
-    // Check if address exists and belongs to the user
-    const address = await this.prisma.address.findFirst({
+  async makeDefaultAddress(userId: string, addressFieldId: string):Promise<Address|null> {
+   
+    const address = await this.prisma.address.findUnique({
       where: {
         id: addressFieldId,
-        userId: userId,
       },
     });
-  
+ 
+
     if (!address) {
       throw new NotFoundException('Address not found for this user');
     }
-  
-    // Set all other addresses to isDefault: false
+
+    
     await this.prisma.address.updateMany({
       where: {
         userId,
@@ -276,24 +335,23 @@ export class UserService {
         isDefault: false,
       },
     });
-  
-    // Set the selected address to isDefault: true
+
+   
     const updatedAddress = await this.prisma.address.update({
       where: { id: addressFieldId },
       data: { isDefault: true },
     });
-  
+
     return updatedAddress;
   }
-  
 
-  async removeUser(userId: string) {
+  async deleteUser(userId: string) {
     const user = await this.prisma.user.delete({
       where: { id: userId },
     });
     return user;
   }
-  async deleteAddress(addressId: string) {
+  async deleteAddress(addressId: string)  {
     const address = await this.prisma.address.delete({
       where: { id: addressId },
     });

@@ -21,24 +21,21 @@ export class User {
   @Field()
   password: string;
 
-  @Field({ nullable: true })
-  profileImage?: string;
+  @Field(() => String, { nullable: true })
+  profileImage: string | null;
 
-  @Field({ nullable: true })
-  dateOfBirth?: string;
+  @Field(() => String, { nullable: true })
+  dateOfBirth: string | null;
 
-  @Field({ nullable: true })
-  gender?: string;
+  @Field(() => String, { nullable: true })
+  gender: string | null;
 
   @Field(() => [Address], { nullable: true })
-  addresses?: Address[];
+  addresses: Address[] | null;
 
-  
-  @Field({ nullable: true })
-  role?: string; 
+  @Field(() => String, { nullable: true })
+  role: string | null;
 }
-
-
 
 @ObjectType()
 export class Address {
@@ -47,6 +44,10 @@ export class Address {
 
   @Field()
   pincode: string;
+
+  @Field()
+  userId:string;
+  
 
   @Field()
   city: string;
@@ -60,9 +61,42 @@ export class Address {
   @Field()
   street: string;
 
-  @Field({ nullable: true })
-  landmark?: string;
+  @Field(() => String, { nullable: true })
+  landmark: string | null;
 
   @Field()
   isDefault: boolean;
+}
+
+@ObjectType()
+export class UserProfile {
+  @Field()
+  id: string;
+
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  phone: string;
+
+  @Field(() => String, { nullable: true })
+  profileImage: string | null;
+
+  @Field(() => String, { nullable: true })
+  dateOfBirth: string | null;
+
+  @Field(() => String, { nullable: true })
+  gender: string | null;
+
+  @Field(() => [Address], { nullable: true })
+  addresses: Address[] | null;
+
+  @Field(() => String, { nullable: true })
+  role: string | null;
 }

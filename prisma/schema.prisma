@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -39,7 +39,7 @@ model User {
 model Address {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   pincode   String
   city      String
   state     String
@@ -192,17 +192,18 @@ model CartItem {
   variantId String
   quantity  Int
 }
+
 model Payment {
-  id               String   @id @default(cuid())
-  razorpayOrderId  String  @unique
+  id                String   @id @default(cuid())
+  razorpayOrderId   String   @unique
   razorpayPaymentId String?
-  amount           Float
-  currency         String
-  receipt          String
-  status           String
-  userId           String?  // Optional, if payment is linked to a user
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  amount            Float
+  currency          String
+  receipt           String
+  status            String
+  userId            String? // Optional, if payment is linked to a user
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Rating {
@@ -223,13 +224,13 @@ model Rating {
 model Order {
   id        String      @id @default(cuid())
   userId    String
-  user      User @relation(fields: [userId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
   items     OrderItem[]
   total     Float
-  status    String      // pending, paid, shipped, delivered, etc.
+  status    String // pending, paid, shipped, delivered, etc.
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  paymentId  String     @unique
+  paymentId String      @unique
 }
 
 model OrderItem {
@@ -242,6 +243,7 @@ model OrderItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model Chat {
   id        String   @id @default(cuid())
   prompt    String
