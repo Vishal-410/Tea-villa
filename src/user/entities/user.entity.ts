@@ -1,5 +1,5 @@
 // src/user/entities/user.entity.ts
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, Float, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class User {
@@ -42,30 +42,34 @@ export class Address {
   @Field()
   id: string;
 
-  @Field()
-  pincode: string;
+  @Field(() => Int, { nullable: true })
+  pincode: number | null;
 
-  @Field()
-  userId:string;
-  
+  @Field(() => String, { nullable: true })
+  userId: string | null;
 
-  @Field()
-  city: string;
+  @Field(() => String, { nullable: true })
+  city: string | null;
 
-  @Field()
-  state: string;
+  @Field(() => String, { nullable: true })
+  state: string | null;
 
-  @Field()
-  country: string;
+  @Field(() => String, { nullable: true })
+  country: string | null;
 
-  @Field()
-  street: string;
+  @Field(() => String, { nullable: true })
+  street: string | null;
 
   @Field(() => String, { nullable: true })
   landmark: string | null;
 
   @Field()
   isDefault: boolean;
+  @Field(() => Float, { nullable: true })
+  latitude: number | null;
+
+  @Field(() => Float, { nullable: true })
+  longitude: number | null;
 }
 
 @ObjectType()
@@ -99,4 +103,39 @@ export class UserProfile {
 
   @Field(() => String, { nullable: true })
   role: string | null;
+}
+@ObjectType()
+export class sendOtpForForgotPasswordResponse {
+  @Field()
+  output: string;
+
+  @Field()
+  email: string;
+}
+@ObjectType()
+export class verifyForgotPasswordOtpResponse {
+  @Field()
+  success: string;
+
+  @Field()
+  message: string;
+
+  @Field()
+  userId:string;
+  
+
+ 
+}
+@ObjectType()
+export class resetPasswordResponse
+{
+  @Field()
+  success: string;
+
+  @Field()
+  message: string;
+
+  
+
+ 
 }

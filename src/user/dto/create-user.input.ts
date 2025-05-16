@@ -1,29 +1,35 @@
-  import { InputType, Field } from '@nestjs/graphql';
+  import { InputType, Field, Float, Int } from '@nestjs/graphql';
 import { IsEmail, Matches } from 'class-validator';
 
   @InputType()
   export class CreateUserAddressInput {
-    
-    @Field()
-    pincode: string;
 
-    @Field()
-    city: string;
+    @Field(()=>Int,{ nullable: true })
+    pincode?: number|null;
 
-    @Field()
-    state: string;
+    @Field(()=>String,{ nullable: true })
+    city?: string|null;
 
-    @Field()
-    country: string;
+    @Field(()=>String,{ nullable: true })
+    state?: string|null;
 
-    @Field()
-    street: string;
+    @Field(()=>String,{ nullable: true })
+    country?: string|null;
 
-    @Field({ nullable: true })
-    landmark?: string;
+    @Field(()=>String,{ nullable: true })
+    street?: string|null;
+
+    @Field(()=>String,{ nullable: true })
+    landmark?: string|null;
 
     @Field({ defaultValue: false })
     isDefault?: boolean;
+
+    @Field(() => Float, { nullable: true })
+    latitude?: number|null;
+
+    @Field(() => Float, { nullable: true })
+    longitude?: number|null;
   }
 
   @InputType()

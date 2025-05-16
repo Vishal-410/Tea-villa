@@ -135,6 +135,14 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role'
 };
 
+exports.Prisma.PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  otp: 'otp',
+  expiresAt: 'expiresAt',
+  used: 'used'
+};
+
 exports.Prisma.AddressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -145,6 +153,8 @@ exports.Prisma.AddressScalarFieldEnum = {
   street: 'street',
   landmark: 'landmark',
   isDefault: 'isDefault',
+  latitude: 'latitude',
+  longitude: 'longitude',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -334,6 +344,7 @@ exports.DiscountType = exports.$Enums.DiscountType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  PasswordResetToken: 'PasswordResetToken',
   Address: 'Address',
   UserToken: 'UserToken',
   ContactUs: 'ContactUs',

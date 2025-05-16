@@ -18,14 +18,16 @@ type User {
 
 type Address {
   id: String!
-  pincode: String!
-  userId: String!
-  city: String!
-  state: String!
-  country: String!
-  street: String!
+  pincode: Int
+  userId: String
+  city: String
+  state: String
+  country: String
+  street: String
   landmark: String
   isDefault: Boolean!
+  latitude: Float
+  longitude: Float
 }
 
 type UserProfile {
@@ -39,6 +41,22 @@ type UserProfile {
   gender: String
   addresses: [Address!]
   role: String
+}
+
+type sendOtpForForgotPasswordResponse {
+  output: String!
+  email: String!
+}
+
+type verifyForgotPasswordOtpResponse {
+  success: String!
+  message: String!
+  userId: String!
+}
+
+type resetPasswordResponse {
+  success: String!
+  message: String!
 }
 
 type JwtAuthResponse {
@@ -212,11 +230,13 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  forgotUserPassword(email: String, phone: String): User!
+  sendOtpForForgotPassword(email: String, phone: String): sendOtpForForgotPasswordResponse!
+  verifyForgotPasswordOtp(email: String!, otp: String!): verifyForgotPasswordOtpResponse!
+  resetPassword(userId: String!, newPassword: String!): resetPasswordResponse!
   changeUserPassword(oldPassword: String!, newPassword: String!, confirmNewPassword: String!): User!
   updateUserProfile: User!
   updateUserAddress(updateUserAddressInput: UpdateUserAddressInput!): Address!
-  addUserAddress(updateUserAddressInput: CreateUserAddressInput!): Address!
+  addUserAddressByManualOrLiveLocation(createUserAddressInput: CreateUserAddressInput!): Address!
   makeDefaultAddress(addressFieldId: String!): Address!
   deleteAccount: User!
   deleteUserAddress(addressId: String!): Address!
@@ -258,23 +278,27 @@ input CreateUserInput {
 }
 
 input CreateUserAddressInput {
-  pincode: String!
-  city: String!
-  state: String!
-  country: String!
-  street: String!
+  pincode: Int
+  city: String
+  state: String
+  country: String
+  street: String
   landmark: String
   isDefault: Boolean! = false
+  latitude: Float
+  longitude: Float
 }
 
 input UpdateUserAddressInput {
-  pincode: String
+  pincode: Int
   city: String
   state: String
   country: String
   street: String
   landmark: String
   isDefault: Boolean = false
+  latitude: Float
+  longitude: Float
   id: String!
 }
 

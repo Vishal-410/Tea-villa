@@ -11,7 +11,7 @@ import {
 } from './dto/update-user.input';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { BadRequestException, UseGuards } from '@nestjs/common';
-import { Address, User, UserProfile } from './entities/user.entity';
+import { Address, resetPasswordResponse, sendOtpForForgotPasswordResponse, User, UserProfile, verifyForgotPasswordOtpResponse } from './entities/user.entity';
 
 @Resolver()
 export class UserResolver {
@@ -22,16 +22,30 @@ export class UserResolver {
     return this.userService.create(createUserInput);
   }
 
-  @Mutation(() => User)
-  async forgotUserPassword(
+  @Mutation(()=>sendOtpForForgotPasswordResponse)
+  async sendOtpForForgotPassword(
     @Args('email', { nullable: true }) email: string,
     @Args('phone', { nullable: true }) phone: string,
-  ) {
+  ):Promise<{output:string,email:string}> {
     if (!email && !phone) {
       throw new BadRequestException('Either email or phone is required');
     }
 
-    return await this.userService.forgetUserPassword(email, phone);
+    return await this.userService.otpSentToEmail(email, phone);
+  }
+  @Mutation(()=>verifyForgotPasswordOtpResponse)
+  async verifyForgotPasswordOtp(
+    @Args('email') email: string,
+    @Args('otp') otp: string,
+  ) :Promise<{success:boolean,message:string,userId:string}>{
+    return await this.userService.verifyForgotPasswordOtp(email, otp);
+  }
+  @Mutation(()=>resetPasswordResponse)
+  async resetPassword(
+    @Args('userId') userId: string,
+    @Args('newPassword') newPassword: string,
+  ):Promise<{success:boolean,message:string}> {
+    return await this.userService.resetPassword(userId, newPassword);
   }
   @UseGuards(JwtAuthGuard)
   @Mutation(() => User)
@@ -76,9 +90,9 @@ export class UserResolver {
   }
   @Mutation(() => Address)
   @UseGuards(JwtAuthGuard)
-  addUserAddress(
+  addUserAddressByManualOrLiveLocation(
     @Context() context,
-    @Args('updateUserAddressInput')
+    @Args('createUserAddressInput')
     createUserAddressInput: CreateUserAddressInput,
   ): Promise<Address | null> {
     const userId: string = context.req.user.id;
