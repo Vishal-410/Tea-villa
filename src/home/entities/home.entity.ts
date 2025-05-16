@@ -2,30 +2,30 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class Home {
-  @Field({ description: 'Unique identifier for the homepage content' })
+  @Field()
   id: string;
 
-  @Field({ description: 'Image URL or path for the homepage content' })
+  @Field()
   image: string;
 
-  @Field({ description: 'Heading text for the homepage content' })
+  @Field()
   heading: string;
 
-  @Field(() => [Paragraph], { description: 'List of paragraphs associated with the homepage content' })
+  @Field(() => [Paragraph])
   paragraphs: Paragraph[];
 
-  @Field(() => Date, { description: 'When the homepage content was created' })
+  @Field(() => Date)
   createdAt: Date;
 
-  @Field(() => Date, { description: 'When the homepage content was last updated' })
+  @Field(() => Date)
   updatedAt: Date;
 }
 
 @ObjectType()
 export class Paragraph {
-  @Field({ description: 'Unique identifier for the paragraph' })
+  @Field()
   id: string;
 
-  @Field({ description: 'Text content of the paragraph' })
+  @Field()
   text: string;
 }

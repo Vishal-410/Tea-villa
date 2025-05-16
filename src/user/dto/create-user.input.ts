@@ -1,61 +1,67 @@
-import { InputType, Field } from '@nestjs/graphql';
+  import { InputType, Field, Float, Int } from '@nestjs/graphql';
+import { IsEmail, Matches } from 'class-validator';
 
-@InputType()
-export class CreateUserAddressInput {
-  @Field()
-  fullName: string;
+  @InputType()
+  export class CreateUserAddressInput {
 
-  @Field()
-  phone: string;
+    @Field(()=>Int,{ nullable: true })
+    pincode?: number|null;
 
-  @Field()
-  pincode: string;
+    @Field(()=>String,{ nullable: true })
+    city?: string|null;
 
-  @Field()
-  city: string;
+    @Field(()=>String,{ nullable: true })
+    state?: string|null;
 
-  @Field()
-  state: string;
+    @Field(()=>String,{ nullable: true })
+    country?: string|null;
 
-  @Field()
-  country: string;
+    @Field(()=>String,{ nullable: true })
+    street?: string|null;
 
-  @Field()
-  street: string;
+    @Field(()=>String,{ nullable: true })
+    landmark?: string|null;
 
-  @Field({ nullable: true })
-  landmark?: string;
+    @Field({ defaultValue: false })
+    isDefault?: boolean;
 
-  @Field({ defaultValue: false })
-  isDefault?: boolean;
-}
+    @Field(() => Float, { nullable: true })
+    latitude?: number|null;
 
-@InputType()
-export class CreateUserInput {
-  @Field()
-  firstName: string;
+    @Field(() => Float, { nullable: true })
+    longitude?: number|null;
+  }
 
-  @Field()
-  lastName: string;
+  @InputType()
+  export class CreateUserInput {
+    @Field()
+    firstName: string;
 
-  @Field()
-  email: string;
+    @Field()
+    lastName: string;
 
-  @Field()
-  phone: string;
+    @Field()
+    @IsEmail({}, { message: 'Invalid email format' })
+    email: string;
 
-  @Field()
-  password: string;
+    @Field()
+    @Matches(/^\+\d{1,3}[6-9]\d{9}$/, {
+      message: 'Phone must include country code and be a valid 10-digit Indian mobile number (e.g. +91XXXXXXXXXX)',
+    })
+    phone: string;
 
-  @Field({ nullable: true })
-  profileImage?: string;
+    @Field()
+    password: string;
 
-  @Field({ nullable: true })
-  dateOfBirth?: string;
+    @Field({ nullable: true })
+    profileImage?: string;
 
-  @Field({ nullable: true })
-  gender?: string;
+    @Field({ nullable: true })
+    dateOfBirth?: string;
 
-  @Field(() => [CreateUserAddressInput], { nullable: true })
-  addresses?: CreateUserAddressInput[];
-}
+    @Field({ nullable: true })
+    gender?: string;
+
+    @Field(() => [CreateUserAddressInput], { nullable: true })
+    addresses?: CreateUserAddressInput[];
+  }

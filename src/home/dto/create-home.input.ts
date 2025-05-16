@@ -2,24 +2,24 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateParagraphInput {
-  @Field({ description: 'Text content of the paragraph' })
+  @Field()
   text: string;
 }
 
 @InputType()
 export class CreateHomeInput {
-  @Field({ description: 'Image URL or path for the homepage content' })
+  @Field()
   image: string;
 
-  @Field({ description: 'Heading text for the homepage content' })
+  @Field()
   heading: string;
 
-  @Field(() => [CreateParagraphInput], { description: 'List of paragraphs associated with the homepage content' })
+  @Field(() => [CreateParagraphInput])
   paragraphs: CreateParagraphInput[];
 
-  @Field(() => Date, { description: 'When the homepage content is created' })
+  @Field(() => Date)
   createdAt: Date;
 
-  @Field(() => Date, { description: 'When the homepage content is last updated' })
+  @Field(() => Date)
   updatedAt: Date;
 }

@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -38,16 +39,16 @@ model User {
 model Address {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  fullName  String
-  phone     String
-  pincode   String
-  city      String
-  state     String
-  country   String
-  street    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pincode   Int?
+  city      String?
+  state     String?
+  country   String?
+  street    String?
   landmark  String?
   isDefault Boolean  @default(false)
+  latitude  Float?
+  longitude Float?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
