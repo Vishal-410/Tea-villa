@@ -145,11 +145,11 @@ export class AuthService {
           email,
           firstName,
           lastName,
-          phone: '0000000000',
+          phone: '',
           password: hashedPassword,
           profileImage,
         },
-      });
+      }); 
     }
 
     // Prepare JWT payload
