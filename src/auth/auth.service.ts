@@ -6,6 +6,7 @@ import { JwtPayload } from './dto/jwt-payload';
 import { JwtAuthResponse } from './dto/jwt-auth.response';
 import { OAuth2Client } from 'google-auth-library';
 import * as nodemailer from 'nodemailer';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -91,7 +92,7 @@ export class AuthService {
       },
     });
 
-    const payload = { sub: user.id, email: user.email,role:user.role };
+    const payload = { sub: user.id, email: user.email, role: user.role };
     const token = this.jwtService.sign(payload);
 
     // Save the token (after removing old)
@@ -108,47 +109,64 @@ export class AuthService {
     return { access_token: token, requires2FA: false }; // Now user has passed OTP
   }
 
-  // Google Login
   async loginWithGoogle(idToken: string): Promise<JwtAuthResponse> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
 
-    const payload = ticket.getPayload();
+    let payload;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+    } catch (err) {
+      throw new BadRequestException('Invalid Google token', err);
+    }
     const email = payload?.email;
-    const name = payload?.given_name || 'User';
+    const firstName = payload?.given_name || 'User';
+    const lastName = payload?.family_name || '';
+    const profileImage = payload?.picture || '';
 
     if (!email) {
-      throw new BadRequestException('Invalid Google token');
+      throw new BadRequestException('Email not found in Google token');
+    }
+    if (!payload?.email_verified) {
+      throw new BadRequestException('Google account email is not verified.');
     }
 
-    let user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+    // Find existing user by email
+    let user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) {
+      const randomPassword = uuidv4();
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
       user = await this.prisma.user.create({
         data: {
           email,
-          firstName: name,
-          lastName: 'singh',
-          phone: String(12345),
-          password: '',
+          firstName,
+          lastName,
+          phone: '0000000000',
+          password: hashedPassword,
+          profileImage,
         },
       });
     }
 
-    const jwtPayload = { sub: user.id, email: user.email ,role:user.role};
+    // Prepare JWT payload
+    const jwtPayload = { sub: user.id, email: user.email, role: user.role };
+
+    // Sign JWT token
     const token = this.jwtService.sign(jwtPayload);
 
+    // Remove old tokens of this user
     await this.prisma.userToken.deleteMany({ where: { userId: user.id } });
+
+    // Save new token in DB
     await this.prisma.userToken.create({
       data: {
         userId: user.id,
         token,
-        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 1),
       },
     });
 
