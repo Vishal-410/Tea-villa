@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import axios from 'axios';
 
@@ -6,9 +6,9 @@ import axios from 'axios';
 export class ChatService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async chat(query: string, imageUrl?: string): Promise<string> {
-    
 
+async chat(query: string, imageUrl?: string): Promise<string> {
+  try {
     let answer: string;
 
     if (imageUrl) {
@@ -26,7 +26,12 @@ export class ChatService {
     });
 
     return answer;
+  } catch (error) {
+
+    throw new InternalServerErrorException('Something went wrong while processing the chat request.');
   }
+}
+
 
   async analyzeImageWithDeepInfra(
     imageUrl: string,
@@ -59,7 +64,6 @@ export class ChatService {
         },
       );
 
-      // Process the response and return the result
       if (response.data && response.data.choices && response.data.choices[0]) {
         return response.data.choices[0].message.content;
       } else {

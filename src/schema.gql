@@ -219,13 +219,25 @@ type Query {
   logoutUser: Boolean!
   homes: [Home!]!
   home(id: String!): Home!
-  products(pageNumber: Float!, pageSize: Float! = 5): ProductPaginationResponse!
-  product(id: String!): Product!
+  filterProducts(filters: ProductFilterInput!, pageNumber: Float!, pageSize: Float! = 5): ProductPaginationResponse!
+  findProductById(id: String!): Product!
   cartByUser(userId: String!): Cart!
   cartById(cartId: String!): Cart!
   blog(id: String!): Blog!
   wishlist: [Wishlist!]!
   myOrders: [Order!]!
+}
+
+input ProductFilterInput {
+  collection: String
+  flavour: String
+  origin: String
+  qualities: [String!]
+  caffeine: String
+  allegens: [String!]
+  isOrganic: Boolean
+  isVegan: Boolean
+  sortBy: String
 }
 
 type Mutation {
@@ -246,7 +258,11 @@ type Mutation {
   createContactUs(createContactusInput: CreateContactusInput!): Contactus!
   createHomePage(createHomeInput: CreateHomeInput!): Home!
   createProduct(createProductInput: CreateProductInput!): Product!
-  product(id: String!): Product!
+  deleteProductById(id: String!): Product!
+  updateProduct(productId: String!): Product!
+  updateVariant(productId: String!): Variant!
+  deleteVariantById(id: String!): Product!
+  addVariantToEistingPRoduct(productId: String!): Variant!
   createCart(createCartInput: CreateCartInput!): Cart!
   mergeCart(guestCartId: String!): Boolean!
   removeItemFromCart(cartId: String!, variantId: String!): Cart!

@@ -1,85 +1,105 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service'; // assuming you have a PrismaService
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class WishlistService {
   constructor(private readonly prisma: PrismaService) {}
 
-  // Method to add a product to the wishlist
   async create(userId: string, productId: string) {
-    // Check if the product exists in the Product table
-    const productExists = await this.prisma.product.findUnique({
-      where: { id: productId },
-    });
+    try {
+      const productExists = await this.prisma.product.findUnique({
+        where: { id: productId },
+      });
 
-    if (!productExists) {
-      throw new Error('Product not found');
+      if (!productExists) {
+        throw new NotFoundException('Product not found');
+      }
+
+      const existingWishlistItem = await this.prisma.wishList.findFirst({
+        where: {
+          userId,
+          productId,
+        },
+      });
+
+      if (existingWishlistItem) {
+        throw new BadRequestException('This product is already in your wishlist');
+      }
+
+      return await this.prisma.wishList.create({
+        data: {
+          userId,
+          productId,
+        },
+      });
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException(`Failed to add product to wishlist: ${error.message}`);
     }
-
-    // Check if the product is already in the user's wishlist
-    const existingWishlistItem = await this.prisma.wishList.findFirst({
-      where: {
-        userId,
-        productId,
-      },
-    });
-
-    if (existingWishlistItem) {
-      throw new Error('This product is already in your wishlist');
-    }
-
-    // Create a new wishlist entry for the product
-    const newWishlistItem = await this.prisma.wishList.create({
-      data: {
-        userId,
-        productId,
-      },
-    });
-
-    return newWishlistItem;
   }
 
-  // Get all wishlist entries for the logged-in user
   async findAll(userId: string) {
-    const wishlists = await this.prisma.wishList.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        product: true, // Include the product data for each wishlist item
-      },
-    });
+    try {
+      const wishlists = await this.prisma.wishList.findMany({
+        where: {
+          userId,
+        },
+        include: {
+          product: true,
+        },
+      });
 
-    return wishlists.map((wishlist) => wishlist.product);
+      return wishlists.map((wishlist) => wishlist.product);
+    } catch (error) {
+      throw new InternalServerErrorException(`Failed to fetch wishlist: ${error.message}`);
+    }
   }
 
-  // Delete all items from the wishlist of the logged-in user
   async deleteAll(userId: string) {
-    const deletedItems = await this.prisma.wishList.deleteMany({
-      where: {
-        userId,
-      },
-    });
+    try {
+      const deletedItems = await this.prisma.wishList.deleteMany({
+        where: {
+          userId,
+        },
+      });
 
-    if (deletedItems.count === 0) {
-      throw new Error('No items to delete');
+      if (deletedItems.count === 0) {
+        throw new NotFoundException('No items to delete');
+      }
+
+      return deletedItems.count;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(`Failed to delete wishlist items: ${error.message}`);
     }
-
-    return deletedItems.count;
   }
 
-  // Remove a specific wishlist item by its ID
   async remove(id: string) {
-    const removedWishlist = await this.prisma.wishList.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      const removedWishlist = await this.prisma.wishList.delete({
+        where: {
+          id,
+        },
+      });
 
-    if (!removedWishlist) {
-      throw new NotFoundException('Wishlist item not found');
+      return removedWishlist;
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException('Wishlist item not found');
+      }
+      throw new InternalServerErrorException(`Failed to remove wishlist item: ${error.message}`);
     }
-
-    return removedWishlist;
   }
 }

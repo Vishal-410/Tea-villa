@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import Razorpay = require('razorpay');
 import * as crypto from 'crypto';
@@ -18,43 +18,37 @@ export class PaymentService {
   // Create a Razorpay Order
   async createOrder(userId: string | null, amount: number, currency = 'INR') {
     const options = {
-      amount: amount * 100,
+      amount: amount * 100, // Convert rupees to paise
       currency,
       receipt: `receipt_order_${Date.now()}`,
     };
 
     try {
-      // Create the Razorpay order
       const order = await this.razorpay.orders.create(options);
-      console.log('Razorpay Order Created:', order);
 
       if (!order || !order.id) {
-        console.error('Failed to create Razorpay order:', order);
-        throw new Error('Razorpay order creation failed');
+        throw new InternalServerErrorException('Razorpay order creation failed');
       }
 
-      // Save the payment details in the database
       const payment = await this.prisma.payment.create({
         data: {
           razorpayOrderId: order.id,
           razorpayPaymentId: null,
-          amount: order.amount / 100, // Convert from paise to rupees
+          amount: order.amount / 100,
           currency: order.currency,
           receipt: order.receipt,
-          status: 'created', // Payment is created but not yet paid
-          userId: userId || null, // Null if no user is logged in
+          status: 'created',
+          userId: userId || null,
         },
       });
 
-      console.log('Payment saved to database:', payment);
       return order.id;
     } catch (error) {
-      console.error('Error in createOrder:', error);
-      throw new Error('Could not create Razorpay order');
+      throw new InternalServerErrorException('Could not create Razorpay order: ' + error.message);
     }
   }
 
-  // Confirm the Razorpay order after payment is made
+  // Confirm the Razorpay order after payment
   async confirmOrder(
     userId: string,
     razorpayOrderId: string,
@@ -62,11 +56,9 @@ export class PaymentService {
     signature: string,
   ) {
     try {
-      // Validate the signature to verify the payment
-
       const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
       if (!RAZORPAY_KEY_SECRET) {
-        throw new BadRequestException('Invalid secret key');
+        throw new BadRequestException('Invalid Razorpay secret key');
       }
 
       const expectedSignature = crypto
@@ -75,10 +67,10 @@ export class PaymentService {
         .digest('hex');
 
       if (expectedSignature !== signature) {
-        throw new Error('Payment signature verification failed');
+        throw new BadRequestException('Payment signature verification failed');
       }
 
-      // Update the payment status and store the payment ID
+      // Update payment status
       const payment = await this.prisma.payment.update({
         where: { razorpayOrderId },
         data: {
@@ -87,7 +79,7 @@ export class PaymentService {
         },
       });
 
-      // Retrieve the user's cart to create the order
+      // Get user's cart
       const cart = await this.prisma.cart.findUnique({
         where: { userId },
         include: {
@@ -95,17 +87,21 @@ export class PaymentService {
         },
       });
 
-      if (!cart || cart.items.length === 0) {
-        throw new Error('Cart is empty');
+      if (!cart) {
+        throw new NotFoundException('Cart not found for user');
       }
 
-      // Calculate the total amount from the cart
+      if (cart.items.length === 0) {
+        throw new BadRequestException('Cart is empty');
+      }
+
+      // Calculate total from cart items
       const total = cart.items.reduce(
         (sum, item) => sum + item.variant.price * item.quantity,
         0,
       );
 
-      // Create an order and link the payment
+      // Create order with payment link
       const order = await this.prisma.order.create({
         data: {
           userId,
@@ -121,28 +117,38 @@ export class PaymentService {
         },
       });
 
-      // Clear the cart after the order is created
+      // Clear cart items
       await this.prisma.cartItem.deleteMany({
         where: { cartId: cart.id },
       });
 
       return order;
     } catch (error) {
-      throw new Error('Could not confirm the payment');
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Could not confirm the payment: ' + error.message);
     }
   }
 
-  async getOrdersByUserId(userId: string):Promise<Order[]> {
-    return this.prisma.order.findMany({
-      where: { userId },
-      include: {
-        items: {
-          include: {
-            variant: true,
+  async getOrdersByUserId(userId: string): Promise<Order[]> {
+    try {
+      return await this.prisma.order.findMany({
+        where: { userId },
+        include: {
+          items: {
+            include: {
+              variant: true,
+            },
           },
         },
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+        orderBy: { createdAt: 'desc' },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to fetch orders: ' + error.message);
+    }
   }
 }
