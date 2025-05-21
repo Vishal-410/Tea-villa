@@ -18,21 +18,24 @@ import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
 import { ChatModule } from './chat/chat.module';
 import { NotificationModule } from './notification/notification.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './tasks/tasks.module';
+
 
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'public'), // 'public' folder me aap apne HTML files rakhenge
-    // }),
+ 
+    
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ req }), // 👈 जरूरी है
       uploads: false,
       csrfPrevention: false,
-      playground: true, // ✅ enable playground
-      introspection: true, // ✅ required in production to view schema
+      playground: true, 
+      introspection: true, 
      }),
+     ScheduleModule.forRoot(), 
 
     UserModule,
     AuthModule,
@@ -48,6 +51,7 @@ import { NotificationModule } from './notification/notification.module';
     RatingModule,
     ChatModule,
     NotificationModule,
+    TasksModule,
   ],
   providers: [ PrismaService],
 })
