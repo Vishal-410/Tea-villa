@@ -214,6 +214,16 @@ type Rating {
   updatedAt: DateTime!
 }
 
+type NotificationModel {
+  id: ID!
+  title: String!
+  message: String!
+  read: Boolean!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  type: String
+}
+
 type Query {
   getUserProfile: UserProfile!
   logoutUser: Boolean!
@@ -226,6 +236,7 @@ type Query {
   blog(id: String!): Blog!
   wishlist: [Wishlist!]!
   myOrders: [Order!]!
+  myNotifications: [NotificationModel!]!
 }
 
 input ProductFilterInput {
@@ -279,6 +290,8 @@ type Mutation {
   createUpdateRating(createRatingInput: CreateRatingInput!): Rating!
   deleteRating(productId: String!): Rating!
   getAnswerFromChat(query: String!, imageUrl: String): String!
+  markNotificationAsRead(notificationId: String!): Boolean!
+  notifyAllUsers(input: CreateNotificationInput!): Boolean!
 }
 
 input CreateUserInput {
@@ -412,4 +425,12 @@ input CreateRatingInput {
   productId: String!
   rating: Float!
   review: String
+}
+
+input CreateNotificationInput {
+  title: String!
+  message: String!
+  sendEmail: Boolean! = false
+  expiresAt: DateTime
+  type: String
 }

@@ -17,6 +17,7 @@ import { CoupounModule } from './coupoun/coupoun.module';
 import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
 import { ChatModule } from './chat/chat.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ChatModule } from './chat/chat.module';
     PaymentModule,
     RatingModule,
     ChatModule,
+    NotificationModule,
   ],
   providers: [ PrismaService],
 })

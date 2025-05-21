@@ -15,11 +15,11 @@ enum Role {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
+  id           String               @id @default(uuid())
+  email        String               @unique
   firstName    String
   lastName     String
-  phone        String        @unique
+  phone        String               @unique
   password     String
   profileImage String?
   addresses    Address[]
@@ -30,10 +30,21 @@ model User {
   token        UserToken[]
   cart         Cart?
   wishlists    WishList[]
-  role         Role          @default(USER)
+  role         Role                 @default(USER)
   coupounUsage CouponUsage[]
   ratings      Rating[]
   order        Order[]
+  resetToken   PasswordResetToken[]
+  notification Notification[]
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  otp       String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Address {
@@ -150,11 +161,11 @@ enum DiscountType {
 model Coupon {
   id            String       @id @default(uuid())
   code          String       @unique
-  discount      Int // value: e.g., 10 means 10% or ₹10
+  discount      Int
   type          DiscountType
-  minimumAmount Float? // optional: cart total must be >= this
-  appliesToAll  Boolean      @default(false) // true => valid for all products
-  size          String? // optional: only valid on this size
+  minimumAmount Float?
+  appliesToAll  Boolean      @default(false)
+  size          String?
   expiresAt     DateTime
   isActive      Boolean      @default(true)
   createdAt     DateTime     @default(now())
@@ -203,7 +214,7 @@ model Payment {
   currency          String
   receipt           String
   status            String
-  userId            String? // Optional, if payment is linked to a user
+  userId            String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -212,8 +223,8 @@ model Rating {
   id        String   @id @default(uuid())
   userId    String
   productId String
-  rating    Int // e.g., 1 to 5
-  review    String? // Optional user feedback
+  rating    Int
+  review    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -251,5 +262,15 @@ model Chat {
   prompt    String
   imageUrl  String?
   response  String
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }

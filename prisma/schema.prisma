@@ -35,6 +35,7 @@ model User {
   ratings      Rating[]
   order        Order[]
   resetToken PasswordResetToken[]
+  userNotification UserNotification[]
 
 }
 model PasswordResetToken {
@@ -160,11 +161,11 @@ enum DiscountType {
 model Coupon {
   id            String       @id @default(uuid())
   code          String       @unique
-  discount      Int // value: e.g., 10 means 10% or ₹10
+  discount      Int
   type          DiscountType
-  minimumAmount Float? // optional: cart total must be >= this
-  appliesToAll  Boolean      @default(false) // true => valid for all products
-  size          String? // optional: only valid on this size
+  minimumAmount Float?
+  appliesToAll  Boolean      @default(false)
+  size          String?
   expiresAt     DateTime
   isActive      Boolean      @default(true)
   createdAt     DateTime     @default(now())
@@ -213,7 +214,7 @@ model Payment {
   currency          String
   receipt           String
   status            String
-  userId            String? // Optional, if payment is linked to a user
+  userId            String? 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -222,8 +223,8 @@ model Rating {
   id        String   @id @default(uuid())
   userId    String
   productId String
-  rating    Int // e.g., 1 to 5
-  review    String? // Optional user feedback
+  rating    Int 
+  review    String? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -263,3 +264,23 @@ model Chat {
   response  String
   createdAt DateTime @default(now())
 }
+model Notification {
+  id          String   @id @default(uuid())
+  title       String
+  message     String
+  type        String?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+  userNotifications UserNotification[]
+}
+
+model UserNotification {
+  id             String       @id @default(uuid())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  read           Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+}
+

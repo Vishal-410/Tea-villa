@@ -318,6 +318,23 @@ exports.Prisma.ChatScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.UserNotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  notificationId: 'notificationId',
+  read: 'read',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -363,7 +380,9 @@ exports.Prisma.ModelName = {
   Rating: 'Rating',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  Chat: 'Chat'
+  Chat: 'Chat',
+  Notification: 'Notification',
+  UserNotification: 'UserNotification'
 };
 
 /**
