@@ -292,9 +292,6 @@ type Mutation {
   getAnswerFromChat(query: String!, imageUrl: String): String!
   markNotificationAsRead(notificationId: String!): Boolean!
   notifyAllUsers(input: CreateNotificationInput!): Boolean!
-  startCronJob(name: String!): String!
-  stopCronJob(name: String!): String!
-  deleteCronJob(name: String!): String!
 }
 
 input CreateUserInput {

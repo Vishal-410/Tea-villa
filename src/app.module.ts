@@ -18,6 +18,7 @@ import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
 import { ChatModule } from './chat/chat.module';
 import { NotificationModule } from './notification/notification.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 
 @Module({
@@ -33,6 +34,7 @@ import { NotificationModule } from './notification/notification.module';
       playground: true, 
       introspection: true, 
      }),
+     ScheduleModule.forRoot(),
      
 
     UserModule,
