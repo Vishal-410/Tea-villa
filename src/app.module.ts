@@ -18,8 +18,6 @@ import { PaymentModule } from './payment/payment.module';
 import { RatingModule } from './rating/rating.module';
 import { ChatModule } from './chat/chat.module';
 import { NotificationModule } from './notification/notification.module';
-import { ScheduleModule } from '@nestjs/schedule';
-import { TasksModule } from './tasks/tasks.module';
 
 
 @Module({
@@ -35,7 +33,7 @@ import { TasksModule } from './tasks/tasks.module';
       playground: true, 
       introspection: true, 
      }),
-     ScheduleModule.forRoot(), 
+     
 
     UserModule,
     AuthModule,
@@ -51,7 +49,7 @@ import { TasksModule } from './tasks/tasks.module';
     RatingModule,
     ChatModule,
     NotificationModule,
-    TasksModule,
+    
   ],
   providers: [ PrismaService],
 })

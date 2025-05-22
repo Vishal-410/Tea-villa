@@ -21,10 +21,16 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
+    let user: any;
 
-    // For GraphQL context
-    const ctx = GqlExecutionContext.create(context);
-    const user = ctx.getContext().req.user;
+    if (context.getType<'graphql'>() === 'graphql') {
+      const ctx = GqlExecutionContext.create(context);
+      user = ctx.getContext().req.user;
+    } else {
+      // Fallback for REST APIs
+      const request = context.switchToHttp().getRequest();
+      user = request.user;
+    }
 
     if (!user) {
       throw new UnauthorizedException('User not found in request');
