@@ -19,6 +19,7 @@ import { RatingModule } from './rating/rating.module';
 import { ChatModule } from './chat/chat.module';
 import { NotificationModule } from './notification/notification.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './tasks/tasks.module';
 
 
 @Module({
@@ -51,6 +52,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     RatingModule,
     ChatModule,
     NotificationModule,
+    TasksModule
     
   ],
   providers: [ PrismaService],
