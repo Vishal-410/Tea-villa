@@ -139,3 +139,9 @@ export class resetPasswordResponse
 
  
 }
+@ObjectType()
+export class ChangeUserPasswordResponse{
+  @Field()
+  message:string;
+  
+}
