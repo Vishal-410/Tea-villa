@@ -225,7 +225,6 @@ export class UserService {
   
   async otpSentToEmail(
     email: string,
-    phone: string,
   ): Promise<{ output: string; email: string }> {
     try {
       let existingUser: User | null = null;
@@ -235,13 +234,8 @@ export class UserService {
           where: { email },
           include: { addresses: true },
         });
-      } else if (phone) {
-        existingUser = await this.prisma.user.findUnique({
-          where: { phone },
-          include: { addresses: true },
-        });
       } else {
-        throw new BadRequestException('Either email or phone must be provided');
+        throw new BadRequestException('Either email  must be provided');
       }
   
       if (!existingUser) {

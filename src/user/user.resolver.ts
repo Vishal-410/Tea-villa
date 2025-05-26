@@ -11,7 +11,7 @@ import {
 } from './dto/update-user.input';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { BadRequestException, UseGuards } from '@nestjs/common';
-import { Address, resetPasswordResponse, sendOtpForForgotPasswordResponse, User, UserProfile, verifyForgotPasswordOtpResponse } from './entities/user.entity';
+import { Address, ChangeUserPasswordResponse, resetPasswordResponse, sendOtpForForgotPasswordResponse, User, UserProfile, verifyForgotPasswordOtpResponse } from './entities/user.entity';
 
 @Resolver()
 export class UserResolver {
@@ -25,13 +25,12 @@ export class UserResolver {
   @Mutation(()=>sendOtpForForgotPasswordResponse)
   async sendOtpForForgotPassword(
     @Args('email', { nullable: true }) email: string,
-    @Args('phone', { nullable: true }) phone: string,
   ):Promise<{output:string,email:string}> {
-    if (!email && !phone) {
-      throw new BadRequestException('Either email or phone is required');
+    if (!email ) {
+      throw new BadRequestException('email  is required');
     }
 
-    return await this.userService.otpSentToEmail(email, phone);
+    return await this.userService.otpSentToEmail(email);
   }
   @Mutation(()=>verifyForgotPasswordOtpResponse)
   async verifyForgotPasswordOtp(
@@ -48,7 +47,7 @@ export class UserResolver {
     return await this.userService.resetPassword(userId, newPassword);
   }
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => User)
+  @Mutation(() => ChangeUserPasswordResponse)
   changeUserPassword(
     @Context() context,
     @Args('oldPassword') oldPassword: string,
