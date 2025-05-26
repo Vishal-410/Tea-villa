@@ -35,7 +35,7 @@ export class AuthResolver {
     return this.authService.loginWithGoogle(idToken);
   }
 
-  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   @UseGuards(JwtAuthGuard)
   async logoutUser(@Context() context): Promise<boolean> {
     const req = context.req;

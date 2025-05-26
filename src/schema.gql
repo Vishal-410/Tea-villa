@@ -226,7 +226,6 @@ type NotificationModel {
 
 type Query {
   getUserProfile: UserProfile!
-  logoutUser: Boolean!
   homes: [Home!]!
   home(id: String!): Home!
   filterProducts(filters: ProductFilterInput!, pageNumber: Float!, pageSize: Float! = 5): ProductPaginationResponse!
@@ -266,6 +265,7 @@ type Mutation {
   login(loginInput: LoginInput!): JwtAuthResponse!
   verifyOtp(email: String!, otp: String!): JwtAuthResponse!
   loginWithGoogle(idToken: String!): JwtAuthResponse!
+  logoutUser: Boolean!
   createContactUs(createContactusInput: CreateContactusInput!): Contactus!
   createHomePage(createHomeInput: CreateHomeInput!): Home!
   createProduct(createProductInput: CreateProductInput!): Product!
@@ -292,6 +292,9 @@ type Mutation {
   getAnswerFromChat(query: String!, imageUrl: String): String!
   markNotificationAsRead(notificationId: String!): Boolean!
   notifyAllUsers(input: CreateNotificationInput!): Boolean!
+  startCronJob(name: String!): String!
+  stopCronJob(name: String!): String!
+  deleteCronJob(name: String!): String!
 }
 
 input CreateUserInput {
